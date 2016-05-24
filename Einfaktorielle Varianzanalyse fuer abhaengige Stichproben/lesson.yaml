@@ -122,4 +122,4 @@
   Output: 'Wie Sie sehen, ist nach fröhlicher Musik die Leistung um ca. 3 Punkte besser.'
 
 - Class: text
-  Output: 'In dieser Übung haben Sie gelernt, die Funktion ezANOVA auf abhängige Stichproben anzuwenden und können damit alle einfaktoriellen Varianzanalysen berechnen. Herzlichen Glückwunsch!'
+  Output: 'In dieser Übung haben Sie gelernt, die Funktion ezANOVA auf abhängige Stichproben anzuwenden und können damit alle einfaktoriellen Varianzanalysen mit festen Effekten berechnen. Im nächsten Kapitel werden Sie das Gelernte auf mehrfaktorielle Varianzanalysen übertragen.'

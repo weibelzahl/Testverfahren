@@ -1,6 +1,5 @@
 # remove motivational message
 options(swirl_is_fun = FALSE)
-options(swirl_language = "german")
 
 # Put initialization code in this file. The variables you create
 # here will show up in the user's workspace when he or she begins
@@ -17,4 +16,3 @@ Daten <- data.frame(Geschlecht=factor(Geschlecht,levels=c("0","1"), labels = c("
                     Erinnerung.TM, Erinnerung.FM)
 
 remove(Geschlecht, Reihenfolge, Erinnerung.FM, Erinnerung.TM)
-
