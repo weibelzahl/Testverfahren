@@ -192,4 +192,4 @@
   Output: 'In der ersten Zeile finden Sie die Testwerte für den Achsenabschnitt, in der 2. Zeile finden Sie die bereits besprochenen Testwerte für den Effekt unseres Faktors Gruppe. In unserem Fall ist also sowohl der Achsenabschnitt als auch der Effekt des Faktors Gruppe signifikant verschieden von 0.'
   
 - Class: text
-  Output: 'In diesem Kapitel haben Sie gelernt, wie einfaktorielle Varianzanalysen für unabhängige Gruppen in R berechnet werden können und wie der Output zu interpretieren ist.'
+  Output: 'In diesem Kapitel haben Sie gelernt, wie einfaktorielle Varianzanalysen für unabhängige Gruppen in R berechnet werden können und wie der Output zu interpretieren ist. Im nächsten Kapitel werden wir diese Schritt auf Varianzanalysen für abhängige Stichproben übertragen.'
