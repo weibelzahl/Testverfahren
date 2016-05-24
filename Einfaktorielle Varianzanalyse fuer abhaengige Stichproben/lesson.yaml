@@ -1,0 +1,125 @@
+- Class: meta
+  Course: Testverfahren
+  Lesson: Einfaktorielle Varianzanalyse für abhängige Stichproben
+  Author: Lea Dammann
+  Type: Standard
+  Organization: PFH Göttingen
+  Version: 0.1
+  
+- Class: text
+  Output: Nachdem Sie in der letzten Übung gelernt haben, wie einfaktorielle Varianzanalysen für unabhängige Stichproben in R berechnet werden können, wollen wir uns in der dieser Übung mit Varianzanalysen für abhängige Stichproben befassen.
+ 
+- Class: cmd_question
+  Output: Wir haben wieder einen Datensatz namens Daten für Sie erstellt. Machen Sie sich zuerst unter Verwendung der Funktion str() mit dem Datensatz vertraut.
+  CorrectAnswer: str(Daten)
+  AnswerTests: omnitest(correctExpr='str(Daten)')
+  Hint: Tippen Sie str(Daten) in die Konsole, um zu sehen, wie der Datensatz aufgebaut ist.
+ 
+- Class: cmd_question
+  Output: Aus wie vielen Zeilen besteht der Datensatz, d.h. wie viele Versuchspersonen haben an dem zugrunde liegendem (fiktiven) Experiment teilgenommen?
+  CorrectAnswer: 80
+  AnswerTests: omnitest(correctVal='80')
+  Hint: Die Anzahl der Zeilen wird in R mit obs. abgekürzt, das für observations (auf Deutsch Beobachtungen) steht. 6 obs. bedeutet beispielsweise, dass der Datensatz 6 Zeilen enthält.
+ 
+- Class: text
+  Output: Wie Sie sich anhand der Variablennamen wahrscheinlich schon gedacht haben, wurde auch in diesem Experiment die Erinnerungsleistung der Probanden erfasst. Im Gegensatz zum letzten Experiment wurde dabei die Leistung jedes Probanden unter verschiedenen Bedingungen erfasst, d.h. jeder Proband musste mehrmals an dem Gedächtnistest teilnehmen. So ein Versuchsaufbau wird auch within-subject-Design genannt.
+  
+- Class: text
+  Output: Wir müssen also eine Varianzanalyse für abhängige Stichproben berechnen, um die Erinnerungsleistung unter den verschiedenen Bedingungen miteinander zu vergleichen. Aber um welche Bedingungen geht es hier eigentlich?
+  
+- Class: text
+  Output: In dem Experiment sollte die Wirkung von Musik auf die Gedächtnisleistung untersucht werden. In der ersten Bedingung hörten die Probanden 10 min. lang traurige Musik und bearbeiteten im Anschluss den Gedächtnistest - die Ergebnisse dieses Tests sind in der Variablen Erinnerung.TM gespeichert. In der zweiten Bedingung hörten die Probanden 10 min. lang fröhliche Musik und bearbeiten im Anschluss eine Parallelversion des Gedächtnistests. Die Gedächtnisleistung nach fröhlicher Musik ist in der Variablen Erinnerung.FM kodiert.
+  
+- Class: mult_question
+  Output: "Wir wollen im Folgenden testen, ob sich die Erinnerungsleistung nach fröhlicher Musik von der nach trauriger Musik unterscheidet. Was wäre demnach in unserem Datensatz die abhängige, was die unabhängige Variable?"
+  AnswerChoices: Erinnerung.TM ist die unabhängige und Erinnerung.FM ist die abhängige Variable; Erinnerung.TM ist die abhängige und Erinnerung.FM ist die unabhängige Variable; AV (abhängige Variable) und UV (unabhängige Variable) sind in unserem Datensatz nicht vorhanden
+  CorrectAnswer: AV (abhängige Variable) und UV (unabhängige Variable) sind in unserem Datensatz nicht vorhanden
+  AnswerTests: omnitest(correctVal="AV (abhängige Variable) und UV (unabhängige Variable) sind in unserem Datensatz nicht vorhanden")
+  Hint: Die unabhängige Variable spiegelt die verschiedenen Untersuchungsbedingungen wider, die abhängige Variable die Gedächtnisleistung.
+  
+- Class: text
+  Output: 'Wie wir gesehen haben, sind unsere unabhängige Variable (Musikart: fröhliche vs. traurige Musik) und unsere abhängige Variable (Gedächtnisleistung) in unserem Datensatz nicht direkt aufgeführt. Dies liegt daran, dass normalerweise die Daten einer Versuchsperson in einer einzigen Zeile stehen. Sowohl unsere unabhängige Variable als auch unsere abhängige Variable nimmt jedoch pro Versuchsperson zwei verschiedene Werte an, da jede Versuchsperson in jeder Bedingung getestet wurde.'
+
+- Class: cmd_question
+  Output: 'Um unseren Datensatz so zu verändern, dass unsere AV und UV in jeweils einer einzigen Variablen des Datensatzes gespeichert sind, können wir die Funktion reshape() verwenden. Schauen Sie sich vorab die Hilfeseite der Funktion reshape an.'
+  CorrectAnswer: ?reshape
+  AnswerTests: any_of_exprs('?reshape','help(reshape)')
+  Hint: Tippen Sie ?reshape in die Konsole, um die Hilfeseite aufzurufen.
+
+- Class: text
+  Output: 'Das Argument direction dient dazu festzulegen, in welche Richtung der Datensatz verändert werden soll. Da wir den Datensatz von einer zeilenweisen Darstellung jeder Versuchsperson in ein Format bringen möchten, welches passend für die Varianzanalyse für abhängige Stichproben ist, müssen wir direction="long" wählen. Dem Argument data kann der Datensatz übergeben werden, der verändert werden soll (d.h. in unserem Fall data=Daten).' 
+
+- Class: mult_question
+  Output: 'Dem Argument varying wird eine Liste von Vektoren oder alternativ ein einziger Vektor übergeben, der die Namen der Variablen des ursprünglichen Datensatzes übergeben, deren Werte im neuen Datensatz zu einer Variablen zusammengefasst werden. In unserem Fall sind dies die Variablen Erinnerung.TM und Erinnerung.FM, deren Werte die Gedächtnisleistung der Probanden widerspiegeln und die zu unserer abhängigen Variablen "Erinnerung" zusammengefasst werden sollen. Welches der folgenden Argumente ist für unsere Zwecke geeignet?' 
+  AnswerChoices: varying = c("Erinnerung.TM", "Erinnerung.FM"); varying1="Erinnerung.TM", varying2="Erinnerung.FM"; varying = c(Erinnerung.TM, Erinnerung.FM); varying = c("Erinnerung.TM.FM")
+  CorrectAnswer: varying = c("Erinnerung.TM", "Erinnerung.FM")
+  AnswerTests: omnitest(correctVal='varying = c("Erinnerung.TM", "Erinnerung.FM")')
+  Hint: Dem Argument varying muss ein Vektor übergeben werden, die die Variablennamen "Erinnerung.TM" und "Erinnerung.FM" enthält. 
+
+- Class: text
+  Output: 'Im Argument timevar kann angegeben werden, welchen Namen die within-subject-Variable, d.h. unsere unabhängige Variable (fröhliche vs. traurige Musik), haben soll. Wir benennen diese mit timevar = "Musikart". Entsprechend kann über das Argument v.names der Name der abhängigen Variablen bestimmt werden. Diese soll in unserem Fall v.names = "Erinnerung" heißen.'
+  
+- Class: mult_question
+  Output: 'Das letzte Argument, das wir brauchen, ist "times". Diesem Argument werden in Form eines numerischen Vektors die Messzeitpunkte übergeben, d.h. in unserem Fall der Messzeitpunkt 1 und der Messzeitpunkt 2. Welcher der folgenden Teilbefehle wäre demnach der richtige?'
+  AnswerChoices: times = c(1,2); times = c("1", "2"); times = c(Messzeitpunkt_1, Messzeitpunkt_2); times = c("Messzeitpunkt_1", "Messzeitpunkt_2")
+  CorrectAnswer: times = c(1,2)
+  AnswerTests: omnitest(correctVal="times = c(1,2)")
+  Hint: Wir benötigen einen numerischen Vektor, d.h. der Vektor darf nur Zahlen enthalten.
+
+- Class: cmd_question
+  Output: 'Jetzt können wir den Datensatz verändern. Ergänzen Sie dafür folgenden Befehl: Daten.long <- reshape(data = ..., direction = ..., varying = ..., timevar = ..., v.names = ..., times = ...)'
+  CorrectAnswer: Daten.long <- reshape(data = Daten, direction = "long", varying = c("Erinnerung.TM", "Erinnerung.FM"), timevar = "Musikart", v.names = "Erinnerung", times = c(1,2))
+  AnswerTests: omnitest(correctExpr='Daten.long <- reshape(data = Daten, direction = "long", varying = c("Erinnerung.TM", "Erinnerung.FM"), timevar = "Musikart", v.names = "Erinnerung", times = c(1,2))')
+  Hint: Schauen Sie sich die vorhergehenden Teile der Übung an, um herauszufinden, wie Sie die Argumente vervollständigen müssen.
+  
+- Class: cmd_question
+  Output: 'Bei der Umwandlung des Datensatzes wird automatisch eine id-Variable erstellt, anhand derer erkennbar ist, welche Daten von welcher Versuchsperson stammen. Dies ist notwendig, da die Daten einer Versuchsperson nun in mehreren Zeilen stehen. Am besten schauen Sie sich den Datensatz einmal an. Verwenden Sie dafür den Befehl View().'
+  CorrectAnswer: View(Daten.long)
+  AnswerTests: omnitest(correctExpr="View(Daten.long)")
+  Hint: Der richtige Befehl lautet View(Daten.long). Achten Sie darauf, dass der Befehl View() mit einem Großbuchstaben beginnt.
+ 
+- Class: cmd_question
+  Output: 'Bevor wir uns der Varianzanalyse zuwenden können, müssen wir die Variablen id und Musikart in Faktoren umwandeln. Nutzen Sie den Befehl Daten.long$id <- factor(Daten.long$id), um die id-Variable in einen Vektor aus Zeichenketten umzuwandeln.'
+  CorrectAnswer: Daten.long$id <- factor(Daten.long$id)
+  AnswerTests: omnitest(correctExpr="Daten.long$id <- factor(Daten.long$id)")
+  Hint: Tippen Sie Daten.long$id <- factor(Daten.long$id) in die Konsole.
+ 
+- Class: cmd_question
+  Output: 'Verwandeln Sie nun auf die gleiche Art und Weise die Variable Musikart in einen Faktor.'
+  CorrectAnswer: Daten.long$Musikart <- factor(Daten.long$Musikart)
+  AnswerTests: omnitest(correctExpr="Daten.long$Musikart <- factor(Daten.long$Musikart)")
+  Hint: Tippen Sie Daten.long$Musikart <- factor(Daten.long$Musikart) in die Konsole, um aus der Variablen Musikart einen Faktor zu machen.
+ 
+- Class: text
+  Output: 'Die Varianzanalyse für abhängige Stichproben kann wie die für unabhängige Stichproben mit der Funktion ezANOVA berechnet werden. Neben den bereits bekannten Argumenten data, dv, wid, type und detailed benötigen wir das Argument within. Dem Argument within wird bei einer ANOVA für abhängige Stichproben die unabhängige Variable übergeben.' 
+
+- Class: cmd_question
+  Output: 'Testen Sie, ob sich die Erinnerungsleistung nach trauriger Musik von der nach fröhlicher Musik unterscheidet, indem Sie folgenden Befehl ergänzen: ezANOVA(data = ..., wid = ..., dv = ..., within = ..., type = 3, detailed = TRUE)'
+  CorrectAnswer: ezANOVA(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart, type = 3, detailed = TRUE)
+  AnswerTests: omnitest(correctExpr="ezANOVA(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart, type = 3, detailed = TRUE)")
+  Hint: 'Der vollständige Befehl lautet: ezANOVA(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart, type = 3, detailed = TRUE)'
+ 
+- Class: mult_question
+  Output: 'Schauen Sie sich den Output der ANOVA an. Gibt es einen signifikanten Unterschied zwischen der Erinnerungsleistung nach trauriger Musik und der nach fröhlicher Musik?'
+  AnswerChoices: Ja; Nein
+  CorrectAnswer: Ja
+  AnswerTests: omnitest(correctVal="Ja")
+  Hint: 'Wenn der p-Wert der Variablen Musikart kleiner als 0.05 ist, handelt es sich um einen signifikanten Effekt. Beachten Sie, dass die Werte in wissenschaftlicher Schreibweise angegeben sind. e-03 bedeutet, dass das Komma um drei Stellen nach links verschoben werden muss, um die "richtige" Zahl zu erhalten. 3.5e-03 wäre also 0.0035'
+ 
+- Class: cmd_question
+  Output: 'Wir haben einen signifikanten Unterschied gefunden - aber nach welcher Musik ist die Gedächtnisleistung denn eigentlich besser? Berechnen Sie dafür zuerst den Mittelwert der Leistung nach trauriger Musik. Dafür können Sie einfach den Befehl mean(Daten$Erinnerung.TM) verwenden.'
+  CorrectAnswer: mean(Daten$Erinnerung.TM)
+  AnswerTests: omnitest(correctExpr="mean(Daten$Erinnerung.TM)")
+  Hint: Tippen Sie mean(Daten$Erinnerung.TM) in die Konsole.
+ 
+- Class: cmd_question
+  Output: 'Berechnen Sie nun den Mittelwert der Leistung nach fröhlicher Musik.'
+  CorrectAnswer: mean(Daten$Erinnerung.FM)
+  AnswerTests: omnitest(correctExpr="mean(Daten$Erinnerung.FM)")
+  Hint: Tippen Sie mean(Daten$Erinnerung.FM) in die Konsole.
+  
+- Class: text
+  Output: 'Wie Sie sehen, ist nach fröhlicher Musik die Leistung um ca. 3 Punkte besser.'
+
+- Class: text
+  Output: 'In dieser Übung haben Sie gelernt, die Funktion ezANOVA auf abhängige Stichproben anzuwenden und können damit alle einfaktoriellen Varianzanalysen berechnen. Herzlichen Glückwunsch!'
