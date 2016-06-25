@@ -1,10 +1,13 @@
 - Class: meta
   Course: Testverfahren
   Lesson: Einfaktorielle Varianzanalyse für abhängige Stichproben
-  Author: Lea Dammann
+  Author: Lea Dammann, Stephan Weibelzahl
   Type: Standard
   Organization: PFH Göttingen
   Version: 0.1
+
+# ToDo: Daten -> daten
+# reshape2 statt reshape
   
 - Class: text
   Output: Nachdem Sie in der letzten Übung gelernt haben, wie einfaktorielle Varianzanalysen für unabhängige Stichproben in R berechnet werden können, wollen wir uns in der dieser Übung mit Varianzanalysen für abhängige Stichproben befassen.
@@ -32,9 +35,9 @@
   
 - Class: mult_question
   Output: "Wir wollen im Folgenden testen, ob sich die Erinnerungsleistung nach fröhlicher Musik von der nach trauriger Musik unterscheidet. Was wäre demnach in unserem Datensatz die abhängige, was die unabhängige Variable?"
-  AnswerChoices: Erinnerung.TM ist die unabhängige und Erinnerung.FM ist die abhängige Variable; Erinnerung.TM ist die abhängige und Erinnerung.FM ist die unabhängige Variable; AV (abhängige Variable) und UV (unabhängige Variable) sind in unserem Datensatz nicht vorhanden
+  AnswerChoices: Erinnerung.TM ist die unabhängige und Erinnerung.FM ist die abhängige Variable; Erinnerung.TM ist die abhängige und Erinnerung.FM ist die unabhängige Variable; AV (abhängige Variable) und UV (unabhängige Variable) sind in unserem Datensatz nicht als explizite Variablen vorhanden
   CorrectAnswer: AV (abhängige Variable) und UV (unabhängige Variable) sind in unserem Datensatz nicht vorhanden
-  AnswerTests: omnitest(correctVal="AV (abhängige Variable) und UV (unabhängige Variable) sind in unserem Datensatz nicht vorhanden")
+  AnswerTests: omnitest(correctVal="AV (abhängige Variable) und UV (unabhängige Variable) sind in unserem Datensatz nicht als explizite Variablen vorhanden")
   Hint: Die unabhängige Variable spiegelt die verschiedenen Untersuchungsbedingungen wider, die abhängige Variable die Gedächtnisleistung.
   
 - Class: text
@@ -83,15 +86,31 @@
   CorrectAnswer: Daten.long$id <- factor(Daten.long$id)
   AnswerTests: omnitest(correctExpr="Daten.long$id <- factor(Daten.long$id)")
   Hint: Tippen Sie Daten.long$id <- factor(Daten.long$id) in die Konsole.
- 
+  
 - Class: cmd_question
   Output: 'Verwandeln Sie nun auf die gleiche Art und Weise die Variable Musikart in einen Faktor.'
   CorrectAnswer: Daten.long$Musikart <- factor(Daten.long$Musikart)
   AnswerTests: omnitest(correctExpr="Daten.long$Musikart <- factor(Daten.long$Musikart)")
   Hint: Tippen Sie Daten.long$Musikart <- factor(Daten.long$Musikart) in die Konsole, um aus der Variablen Musikart einen Faktor zu machen.
- 
+
 - Class: text
-  Output: 'Die Varianzanalyse für abhängige Stichproben kann wie die für unabhängige Stichproben mit der Funktion ezANOVA berechnet werden. Neben den bereits bekannten Argumenten data, dv, wid, type und detailed benötigen wir das Argument within. Dem Argument within wird bei einer ANOVA für abhängige Stichproben die unabhängige Variable übergeben.' 
+  Output: 'Jetzt haben wir die Daten endlich so für die Analyse vorbereitet, wie wir sie brauchen. Bevor wir jetzt die eigentliche Varianzanalyse berechnen, sollten wir uns zunächst einen Überblick der Daten verschaffen.' 
+
+- Class: cmd_question
+  Output: 'Einen solchen Überblick gibt uns der Befehl ezStats(), den Sie bereits kennen. Berechnen Sie mit diesem Befehl die passenden deskriptiven Statistiken für die abhängige Variable Erinnerung und den Messwiederholungsfaktor Musikart.'
+  CorrectAnswer: ezStats(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart)
+  AnswerTests: omnitest(correctExpr="ezStats(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart)")
+  Hint: 'Der vollständige Befehl lautet: ezStats(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart). Weitere Argumente sind nicht notwendig.'
+
+- Class: mult_question
+  Output: 'Unter welcher Bedingung haben die Teilnehmer im Durchschnitt die höhere Erinnerungsleistung?' 
+  AnswerChoices: in Bedingung 1, also nach trauriger Musik; in Bedingung 2, also nach fröhlicher Musik
+  CorrectAnswer: in Bedingung 2, also nach fröhlicher Musik
+  AnswerTests: omnitest(correctVal='in Bedingung 2, also nach fröhlicher Musik')
+  Hint: Vergleichen Sie die Mittelwerte der beiden Bedingungen in der Ausgabe von ezStats()
+  
+- Class: text
+  Output: 'Kommen wir zur eigentlichen Hypothesenprüfung. Die Varianzanalyse für abhängige Stichproben kann wie die für unabhängige Stichproben mit der Funktion ezANOVA berechnet werden. Neben den bereits bekannten Argumenten data, dv, wid, type und detailed benötigen wir das Argument within. Dem Argument within wird bei einer ANOVA für abhängige Stichproben die unabhängige Variable übergeben.' 
 
 - Class: cmd_question
   Output: 'Testen Sie, ob sich die Erinnerungsleistung nach trauriger Musik von der nach fröhlicher Musik unterscheidet, indem Sie folgenden Befehl ergänzen: ezANOVA(data = ..., wid = ..., dv = ..., within = ..., type = 3, detailed = TRUE)'
@@ -106,20 +125,21 @@
   AnswerTests: omnitest(correctVal="Ja")
   Hint: 'Wenn der p-Wert der Variablen Musikart kleiner als 0.05 ist, handelt es sich um einen signifikanten Effekt. Beachten Sie, dass die Werte in wissenschaftlicher Schreibweise angegeben sind. e-03 bedeutet, dass das Komma um drei Stellen nach links verschoben werden muss, um die "richtige" Zahl zu erhalten. 3.5e-03 wäre also 0.0035'
  
-- Class: cmd_question
-  Output: 'Wir haben einen signifikanten Unterschied gefunden - aber nach welcher Musik ist die Gedächtnisleistung denn eigentlich besser? Berechnen Sie dafür zuerst den Mittelwert der Leistung nach trauriger Musik. Dafür können Sie einfach den Befehl mean(Daten$Erinnerung.TM) verwenden.'
-  CorrectAnswer: mean(Daten$Erinnerung.TM)
-  AnswerTests: omnitest(correctExpr="mean(Daten$Erinnerung.TM)")
-  Hint: Tippen Sie mean(Daten$Erinnerung.TM) in die Konsole.
- 
-- Class: cmd_question
-  Output: 'Berechnen Sie nun den Mittelwert der Leistung nach fröhlicher Musik.'
-  CorrectAnswer: mean(Daten$Erinnerung.FM)
-  AnswerTests: omnitest(correctExpr="mean(Daten$Erinnerung.FM)")
-  Hint: Tippen Sie mean(Daten$Erinnerung.FM) in die Konsole.
-  
 - Class: text
-  Output: 'Wie Sie sehen, ist nach fröhlicher Musik die Leistung um ca. 3 Punkte besser.'
+  Output: 'Der Unterschied im Mittelwert, den wir am Anfang mit dem Befehl ezStats() ermittelt hatten, ist also bedeutsam. Nach fröhlicher Musik war die Erinnerungsleistung überzufällig höher als nach trauriger Musik.'
 
+- Class: cmd_question
+  Output: 'Wie Sie wissen, können wir uns das Ergebnis auch leicht in einem Diagramm anzeigen lassen. Verwenden Sie dafür den Befehl ezPlot(). Die erforderlichen Argumente sind fast die gleichen, wie Sie sie mit dem Befehl ezStats() verwendet haben: data, dv, wid und within. Neu hinzu kommt nur noch x=Musikart, um anzuzeigen, dass die Musikart auf der x-Achse abgetragen werden soll.'
+  CorrectAnswer: ezPlot(Daten.long, Erinnerung, id, within = Musikart, x = Musikart)
+  AnswerTests: omnitest(correctExpr="ezPlot(Daten.long, Erinnerung, id, within = Musikart, x = Musikart)")
+  Hint: 'Der vollständige Befehl lautet: ezPlot(Daten.long, Erinnerung, id, within = Musikart, x = Musikart)'
+
+- Class: text
+  Output: 'Hier nochmal im Überblick, wie wir für die Analyse vorgegangen sind:
+  1. reshape(), um die Daten in das Longformat zu bekommen;
+  2. ezStats(), um einen Überblick der Daten zu erhalten;
+  3. ezANOVA() mit dem neuen Argument within, für die eigentliche Varianzanalyse;
+  4. ezPlot(), um das Ergebnis auch graphisch darzustellen'
+  
 - Class: text
   Output: 'In dieser Übung haben Sie gelernt, die Funktion ezANOVA auf abhängige Stichproben anzuwenden und können damit alle einfaktoriellen Varianzanalysen mit festen Effekten berechnen. Im nächsten Kapitel werden Sie das Gelernte auf mehrfaktorielle Varianzanalysen übertragen.'
