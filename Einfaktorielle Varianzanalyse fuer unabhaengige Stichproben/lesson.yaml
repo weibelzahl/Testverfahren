@@ -4,7 +4,7 @@
   Author: Lea Dammann, Stephan Weibelzahl
   Type: Standard
   Organization: PFH Göttingen
-  Version: 0.1
+  Version: 0.2
 
   
 - Class: text
@@ -18,10 +18,10 @@
   Hint: Bei der Varianzanalyse wird zwar das Verhältnis von Varianzen betrachtet, das eigentliche Ziel ist jedoch ein Gruppenvergleich eines anderen Maßes.
   
 - Class: cmd_question
-  Output: In Ihrem Arbeitsbereich befindet sich ein Datensatz namens Daten, den wir im Folgenden verwenden werden. Machen Sie sich jetzt unter Verwendung der Funktion summary() mit dem Datensatz vertraut.
-  CorrectAnswer: summary(Daten)
-  AnswerTests: omnitest(correctExpr='summary(Daten)')
-  Hint: Tippen Sie summary(Daten) in die Konsole, um zu sehen, wie der Datensatz aufgebaut ist.
+  Output: In Ihrem Arbeitsbereich befindet sich ein Datensatz namens daten, den wir im Folgenden verwenden werden. Machen Sie sich jetzt unter Verwendung der Funktion summary() mit dem Datensatz vertraut.
+  CorrectAnswer: summary(daten)
+  AnswerTests: omnitest(correctExpr='summary(daten)')
+  Hint: Tippen Sie summary(daten) in die Konsole, um zu sehen, wie der Datensatz aufgebaut ist.
 
 - Class: cmd_question
   Output: "Wie viele Variablen hat der Datensatz?"
@@ -80,9 +80,9 @@
 
 - Class: mult_question
   Output: 'Das Argument data bezeichnet - wie Sie möglicherweise schon erraten haben - den Datensatz, der verwendet werden soll. Wie müsste dieser Teilbefehl in unserem Beispiel lauten?'
-  AnswerChoices: data = Daten; data = "Daten"; data = c(Erinnerung, Gruppe); data = Erinnerung und Gruppe
-  CorrectAnswer: data = Daten
-  AnswerTests: omnitest(correctVal='data = Daten')
+  AnswerChoices: data = daten; data = "daten"; data = c(Erinnerung, Gruppe); data = Erinnerung und Gruppe
+  CorrectAnswer: data = daten
+  AnswerTests: omnitest(correctVal='data = daten')
   Hint: Den Namen unseres Datensatzes finden Sie in R Studio im rechten oberen Feld unter Environment.
 
 - Class: mult_question
@@ -102,10 +102,10 @@
   Hint: Tippen Sie ProbNR <- 1:30 in die Konsole um den Vektor zu erstellen.
   
 - Class: cmd_question 
-  Output: 'Was machen wir, wenn wir vergessen haben, wie viele Probanden unser Datensatz enthält? Am einfachsten ist es, die Funktion length auf den Faktor oder die abhängige Variable anzuwenden. Das Ergebnis von length(Daten$Gruppe) ist 30, entspricht also der Anzahl unserer Probanden. Nutzen Sie diesen Befehl, um den Vektor ProbNR erneut zu erstellen.'
-  CorrectAnswer: ProbNR <- 1:length(Daten$Gruppe)
-  AnswerTests: omnitest(correctExpr='ProbNR <- 1:length(Daten$Gruppe)')
-  Hint: Tippen Sie ProbNR <- 1:length(Daten$Gruppe) in die Konsole, um den Vektor zu erstellen. 
+  Output: 'Was machen wir, wenn wir vergessen haben, wie viele Probanden unser Datensatz enthält? Am einfachsten ist es, die Funktion length auf den Faktor oder die abhängige Variable anzuwenden. Das Ergebnis von length(daten$Gruppe) ist 30, entspricht also der Anzahl unserer Probanden. Nutzen Sie diesen Befehl, um den Vektor ProbNR erneut zu erstellen.'
+  CorrectAnswer: ProbNR <- 1:length(daten$Gruppe)
+  AnswerTests: omnitest(correctExpr='ProbNR <- 1:length(daten$Gruppe)')
+  Hint: Tippen Sie ProbNR <- 1:length(daten$Gruppe) in die Konsole, um den Vektor zu erstellen. 
 
 - Class: cmd_question 
   Output: 'Für die Varianzanalyse muss die Probandennummer als Faktor vorliegen. Wandeln Sie den numerischen Vektor ProbNR in einen Faktor um, indem Sie den Befehl ProbNR <- factor(ProbNr) verwenden.'
@@ -120,13 +120,13 @@
   Hint: Tippen Sie ProbNR in die Konsole um den Inhalt des Vektors zu sehen. 
 
 - Class: text
-  Output: 'Um den neuen Vektor in den Datensatz zu integrieren, können wir den folgenden Befehl verwenden: Datensatzname$Variablenname <- Variable, d.h. in unserem Fall Daten$ProbNR <- ProbNR.'
+  Output: 'Um den neuen Vektor in den Datensatz zu integrieren, können wir den folgenden Befehl verwenden: Datensatzname$Variablenname <- Variable, d.h. in unserem Fall daten$ProbNR <- ProbNR.'
   
 - Class: cmd_question 
-  Output: 'Die Erstellung des Vektors und das Integrieren in den vorhandenen Datensatz lassen sich auch in einem Befehl verbinden. In unserem Fall würde das so aussehen: Daten$ProbNR <- factor(1:length(Daten$Gruppe)). Probieren Sie diesen Befehl einmal aus.'
-  CorrectAnswer: Daten$ProbNR <- factor(1:length(Daten$Gruppe))
-  AnswerTests: omnitest(correctExpr='Daten$ProbNR <- factor(1:length(Daten$Gruppe))')
-  Hint: Tippen Sie Daten$ProbNR <- factor(1:length(Daten$Gruppe)) in die Konsole, um den Vektor zu erstellen. 
+  Output: 'Die Erstellung des Vektors und das Integrieren in den vorhandenen Datensatz lassen sich auch in einem Befehl verbinden. In unserem Fall würde das so aussehen: daten$ProbNR <- factor(1:length(daten$Gruppe)). Probieren Sie diesen Befehl einmal aus.'
+  CorrectAnswer: daten$ProbNR <- factor(1:length(daten$Gruppe))
+  AnswerTests: omnitest(correctExpr='daten$ProbNR <- factor(1:length(daten$Gruppe))')
+  Hint: Tippen Sie daten$ProbNR <- factor(1:length(daten$Gruppe)) in die Konsole, um den Vektor zu erstellen. 
   
 - Class: text
   Output: 'Nachdem wir nun den Vektor ProbNR mit einer fortlaufenden Probandennummer erstellt haben, können wir auch das Argument wid spezifizieren: wid=ProbNR'
@@ -139,10 +139,10 @@
   Hint: Die Variablen dürfen nicht als Zeichenketten angegeben werden, sondern müssen ohne Anführungszeichen stehen.
   
 - Class: cmd_question 
-  Output: 'Damit haben wir alle notwendigen Argumente für den Befehl ezStats zusammen: Der Datensatz wird mit data=Daten übergeben, die abhängige Variable mit dv=Erinnerung, die ID mit wid=ProbNR und der Gruppierungsvariable mit between=Gruppe. Berechnen Sie nun mit dem Befehl ezStats() die deskriptiven Statistiken.'
-  CorrectAnswer: ezStats(data=Daten, dv=Erinnerung, wid=ProbNR, between=Gruppe)
-  AnswerTests: omnitest(correctExpr='ezStats(data=Daten, dv=Erinnerung, wid=ProbNR, between=Gruppe)')
-  Hint: Tippen Sie ezStats(data=Daten, dv=Erinnerung, wid=ProbNR, between=Gruppe) in die Konsole, um die Statistiken zu erstellen. 
+  Output: 'Damit haben wir alle notwendigen Argumente für den Befehl ezStats zusammen: Der Datensatz wird mit data=daten übergeben, die abhängige Variable mit dv=Erinnerung, die ID mit wid=ProbNR und der Gruppierungsvariable mit between=Gruppe. Berechnen Sie nun mit dem Befehl ezStats() die deskriptiven Statistiken.'
+  CorrectAnswer: ezStats(data=daten, dv=Erinnerung, wid=ProbNR, between=Gruppe)
+  AnswerTests: omnitest(correctExpr='ezStats(data=daten, dv=Erinnerung, wid=ProbNR, between=Gruppe)')
+  Hint: Tippen Sie ezStats(data=daten, dv=Erinnerung, wid=ProbNR, between=Gruppe) in die Konsole, um die Statistiken zu erstellen. 
 
 - Class: mult_question
   Output: 'Welche Gruppe hat den höchsten Mittelwert?'
@@ -163,8 +163,8 @@
     
 - Class: cmd_question 
   Output: 'Jetzt sind wir so weit, dass wir die erste Varianzanalyse rechnen können! Verwenden Sie den Befehl ezANOVA() und die vier zuvor besprochenen Argumente dv, between, data und wid. Erinnern Sie sich daran, dass Sie die einzelnen Teilbefehle mit Kommata voneinander trennen müssen. Wie lautet demnach der vollständige Befehl für unsere Varianzanalyse?'
-  CorrectAnswer: ezANOVA(dv=Erinnerung, between=Gruppe, data=Daten, wid=ProbNR)
-  AnswerTests: omnitest(correctExpr='ezANOVA(dv=Erinnerung, between=Gruppe, data=Daten, wid=ProbNR)')
+  CorrectAnswer: ezANOVA(dv=Erinnerung, between=Gruppe, data=daten, wid=ProbNR)
+  AnswerTests: omnitest(correctExpr='ezANOVA(dv=Erinnerung, between=Gruppe, data=daten, wid=ProbNR)')
   Hint: 'Vervollständigen Sie folgenden Befehl: ezANOVA(dv=Erinnerung, between=Gruppe, data= ... , wid= ...)'
  
 - Class: cmd_question 
@@ -198,22 +198,22 @@
   Hint: Wenn der Levene-Test signifikant ist, ist die Varianzhomogenität nicht gegeben. 
   
 - Class: text
-  Output: 'Varianzhomogenität ist eine der Voraussetzungen der Varianzanalyse. Wäre diese nicht gegeben, müsste die Varianzanalyse mit dem zusätzlichen Argument white.adjust=TRUE neu berechnet werden, sodass eine Korrektur des Verfahrens für heterogene Varianzen erfolgt. Der entsprechende Befehl würde dann ezANOVA(dv=Erinnerung, between=Gruppe, data=Daten, wid=ProbNR, white.adjust=TRUE) lauten.'  
+  Output: 'Varianzhomogenität ist eine der Voraussetzungen der Varianzanalyse. Wäre diese nicht gegeben, müsste die Varianzanalyse mit dem zusätzlichen Argument white.adjust=TRUE neu berechnet werden, sodass eine Korrektur des Verfahrens für heterogene Varianzen erfolgt. Der entsprechende Befehl würde dann ezANOVA(dv=Erinnerung, between=Gruppe, data=daten, wid=ProbNR, white.adjust=TRUE) lauten.'  
   
 - Class: cmd_question 
   Output: 'Abschließend wollen wir uns noch zwei weitere Argumente des ezANOVA-Befehls ansehen. Das Argument detailed=TRUE bzw. detailed=FALSE bestimmt, wie viele Informationen R ausgibt. Wenn Sie der Funktion ezANOVA das Argument detailed=TRUE hinzufügen, stehen im Output auch die Quadratsummen, die für die Berechnung des F-Wertes benötigt werden. Schauen Sie sich diesen erweiterten Output jetzt an.'
-  CorrectAnswer: ezANOVA(dv=Erinnerung, between=Gruppe, data=Daten, wid=ProbNR, detailed=TRUE)
-  AnswerTests: omnitest(correctExpr='ezANOVA(dv=Erinnerung, between=Gruppe, data=Daten, wid=ProbNR, detailed=TRUE)')
-  Hint: 'Der notwendige Befehl lautet: ezANOVA(dv=Erinnerung, between=Gruppe, data=Daten, wid=ProbNR, detailed=TRUE)'
+  CorrectAnswer: ezANOVA(dv=Erinnerung, between=Gruppe, data=daten, wid=ProbNR, detailed=TRUE)
+  AnswerTests: omnitest(correctExpr='ezANOVA(dv=Erinnerung, between=Gruppe, data=daten, wid=ProbNR, detailed=TRUE)')
+  Hint: 'Der notwendige Befehl lautet: ezANOVA(dv=Erinnerung, between=Gruppe, data=daten, wid=ProbNR, detailed=TRUE)'
  
 - Class: text 
   Output: 'Durch das Argument type kann bestimmt werden, wie die Quadratsummen berechnet werden sollen. Wenn Sie das Argument nicht extra angeben, wird der Berechnungstyp 2 verwendet. Da im Fall von unbalancierten Versuchsplänen der Berechnungstyp 3 vorzuziehen ist und dieser im Fall der einfaktoriellen Varianzanalyse zu denselben Ergebnissen wie der Berechnungstyp 2 führt, ist es zu empfehlen, immer type=3 zu wählen.'
  
 - Class: cmd_question 
-  Output: 'Wird sowohl type=3 als auch detailed=TRUE gewählt, erhalten Sie auch Information über die Signifikanz des Achsenabschnitts der zugrundeliegenden Strukturgleichung. Tippen Sie ezANOVA(dv=Erinnerung, between=Gruppe, data=Daten, wid=ProbNR, detailed=TRUE, type=3) in die Konsole und sehen Sie sich den Output an.'
-  CorrectAnswer: ezANOVA(dv=Erinnerung, between=Gruppe, data=Daten, wid=ProbNR, detailed=TRUE, type=3)
-  AnswerTests: omnitest(correctExpr='ezANOVA(dv=Erinnerung, between=Gruppe, data=Daten, wid=ProbNR, detailed=TRUE, type=3)')
-  Hint: 'Der notwendige Befehl lautet: ezANOVA(dv=Erinnerung, between=Gruppe, data=Daten, wid=ProbNR, detailed=TRUE, type=3)'
+  Output: 'Wird sowohl type=3 als auch detailed=TRUE gewählt, erhalten Sie auch Information über die Signifikanz des Achsenabschnitts der zugrundeliegenden Strukturgleichung. Tippen Sie ezANOVA(dv=Erinnerung, between=Gruppe, data=daten, wid=ProbNR, detailed=TRUE, type=3) in die Konsole und sehen Sie sich den Output an.'
+  CorrectAnswer: ezANOVA(dv=Erinnerung, between=Gruppe, data=daten, wid=ProbNR, detailed=TRUE, type=3)
+  AnswerTests: omnitest(correctExpr='ezANOVA(dv=Erinnerung, between=Gruppe, data=daten, wid=ProbNR, detailed=TRUE, type=3)')
+  Hint: 'Der notwendige Befehl lautet: ezANOVA(dv=Erinnerung, between=Gruppe, data=daten, wid=ProbNR, detailed=TRUE, type=3)'
   
 - Class: text 
   Output: 'In der ersten Zeile finden Sie die Testwerte für den Achsenabschnitt, in der 2. Zeile finden Sie die bereits besprochenen Testwerte für den Effekt unseres Faktors Gruppe. In unserem Fall ist also sowohl der Achsenabschnitt als auch der Effekt des Faktors Gruppe signifikant verschieden von 0.'
@@ -223,15 +223,15 @@
   
 - Class: cmd_question 
   Output: 'Der Befehl ezPlot() verwendet praktischerweise auch wieder die gleichen Argumente die wir schon kennen: data für den Datensatz, dv für die abhängige Variable, wid für die Identifikationsnummer und between für die Gruppierungsvariable. Zusätzlich müssen wir noch festlegen, was auf der x-Achse abgetragen werden soll. In unserem Fall ist das x=Gruppe. Erstellen Sie mit ezPlot() ein Diagramm.'
-  CorrectAnswer: ezPlot(data=Daten, dv=Erinnerung, wid=ProbNR, between=Gruppe, x=Gruppe)
-  AnswerTests: omnitest(correctExpr='ezPlot(data=Daten, dv=Erinnerung, wid=ProbNR, between=Gruppe, x=Gruppe)')
-  Hint: 'Der notwendige Befehl lautet: ezPlot(data=Daten, dv=Erinnerung, wid=ProbNR, between=Gruppe, x=Gruppe)'
+  CorrectAnswer: ezPlot(data=daten, dv=Erinnerung, wid=ProbNR, between=Gruppe, x=Gruppe)
+  AnswerTests: omnitest(correctExpr='ezPlot(data=daten, dv=Erinnerung, wid=ProbNR, between=Gruppe, x=Gruppe)')
+  Hint: 'Der notwendige Befehl lautet: ezPlot(data=daten, dv=Erinnerung, wid=ProbNR, between=Gruppe, x=Gruppe)'
 
 - Class: cmd_question 
   Output: 'Darum wurde das Paket wohl ez genannt: Es ist ganz leicht die wichtigsten Auswertungen einer Varianzanalyse zusammen zu tragen und die Argumente sind leicht zu merken, weil sie über Befehle hinweg immer gleich lauten. Wir können das Diagramm noch ein wenig hübscher machen, indem wir die passenden Achsenbeschriftung hinzufügen. Auf der y-Achse ist die Erinnerungsleistung abgetragen. Ergänzen Sie den ezPlot-Befehl von oben, um das zusätzliche Argument y_lab="Erinnerungsleistung".'
-  CorrectAnswer: ezPlot(data=Daten, dv=Erinnerung, wid=ProbNR, between=Gruppe, x=Gruppe, y_lab="Erinnerungsleistung")
-  AnswerTests: omnitest(correctExpr='ezPlot(data=Daten, dv=Erinnerung, wid=ProbNR, between=Gruppe, x=Gruppe, y_lab="Erinnerungsleistung")')
-  Hint: 'Es ist nicht notwendig den Befehl ganz neu einzutippen. Mit der Pfeil-oben Taste können Sie frühere Eingaben wieder zurückholen und dann ergänzen. Der notwendige Befehl lautet: ezPlot(data=Daten, dv=Erinnerung, wid=ProbNR, between=Gruppe, x=Gruppe, y_lab="Erinnerungsleistung")'
+  CorrectAnswer: ezPlot(data=daten, dv=Erinnerung, wid=ProbNR, between=Gruppe, x=Gruppe, y_lab="Erinnerungsleistung")
+  AnswerTests: omnitest(correctExpr='ezPlot(data=daten, dv=Erinnerung, wid=ProbNR, between=Gruppe, x=Gruppe, y_lab="Erinnerungsleistung")')
+  Hint: 'Es ist nicht notwendig den Befehl ganz neu einzutippen. Mit der Pfeil-oben Taste können Sie frühere Eingaben wieder zurückholen und dann ergänzen. Der notwendige Befehl lautet: ezPlot(data=daten, dv=Erinnerung, wid=ProbNR, between=Gruppe, x=Gruppe, y_lab="Erinnerungsleistung")'
 
 - Class: text 
   Output: 'Sieht das nicht hübsch aus? Wenn Sie nun Ihre Analyse in einem Bericht dokumentieren müssten, könnten Sie dieses Diagramm nun einfach an geeigneter Stelle einbinden.'

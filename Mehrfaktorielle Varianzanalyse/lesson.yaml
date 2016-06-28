@@ -1,9 +1,10 @@
 - Class: meta
-  Course: Varianzanalysen in R
+  Course: Testverfahren
   Lesson: Mehrfaktorielle Varianzanalysen
-  Author: Lea Dammann
+  Author: Lea Dammann, Stephan Weibelzahl
   Type: Standard
-  Organization: PFH Goettingen
+  Organization: PFH Göttingen
+  Version: 0.2
 
   
 - Class: text
@@ -13,43 +14,59 @@
   Output: 'Der Datensatz enthält neben den bereits bekannten Variablen Erinnerung.TM und Erinnerung.FM die  between-subject-Variablen Geschlecht und Reihenfolge. Die Variable Reihenfolge hat zwei Ausprägungen: "FM zuerst" bedeutet, dass die Gedächtnisleistung der Probanden nach fröhlicher Musik vor der Leistung nach trauriger Musik erfasst wurde. Ist "TM zuerst" kodiert, war die Reihenfolge umgekehrt.'
 
 - Class: cmd_question
-  Output: Schauen Sie sich mit Hilfe der Funktion table(Daten$Reihenfolge, Daten$Geschlecht) die Verteilung der Versuchspersonen in Bezug auf diese beiden Variablen an.
-  CorrectAnswer: table(Daten$Reihenfolge, Daten$Geschlecht)
-  AnswerTests: omnitest(correctExpr='table(Daten$Reihenfolge, Daten$Geschlecht)')
-  Hint: Tippen Sie table(Daten$Reihenfolge, Daten$Geschlecht) in die Konsole, um die entsprechende Kreuztabelle zu erstellen.
+  Output: Schauen Sie sich mit Hilfe der Funktion table(daten$Reihenfolge, daten$Geschlecht) die Verteilung der Versuchspersonen in Bezug auf diese beiden Variablen an.
+  CorrectAnswer: table(daten$Reihenfolge, daten$Geschlecht)
+  AnswerTests: omnitest(correctExpr='table(daten$Reihenfolge, daten$Geschlecht)')
+  Hint: Tippen Sie table(daten$Reihenfolge, daten$Geschlecht) in die Konsole, um die entsprechende Kreuztabelle zu erstellen.
   
 - Class: text
   Output: Wie Sie sehen, enthält jede Zelle gleich viele Versuchspersonen, d.h. es handelt sich um einen balancierten Versuchsplan. 
 
 - Class: cmd_question
-  Output: 'Zunächst möchten wir untersuchen, inwieweit die Reihenfolge die Gedächtnisleistung nach fröhlicher bzw. trauriger Musik beeinflusst. Da die Musikart ein within-subject-Faktor ist, müssen wir zunächst den Datensatz anpassen. Ergänzen Sie dazu folgenden Befehl: Daten.long <- reshape(data = ..., direction = ..., varying = ..., timevar = "Musikart", v.names = "Erinnerung", times = ...)'
-  CorrectAnswer: Daten.long <- reshape(data = Daten, direction = "long", varying = c("Erinnerung.TM", "Erinnerung.FM"), timevar = "Musikart", v.names = "Erinnerung", times = c(1,2))
-  AnswerTests: omnitest(correctExpr='Daten.long <- reshape(data = Daten, direction = "long", varying = c("Erinnerung.TM", "Erinnerung.FM"), timevar = "Musikart", v.names = "Erinnerung", times = c(1,2))')
-  Hint: 'Der notwendige Befehl lautet: Daten.long <- reshape(data = Daten, direction = "long", varying = c("Erinnerung.TM", "Erinnerung.FM"), timevar = "Musikart", v.names = "Erinnerung", times = c(1,2))'
+  Output: 'Zunächst möchten wir untersuchen, inwieweit die Reihenfolge die Gedächtnisleistung nach fröhlicher bzw. trauriger Musik beeinflusst. Da die Musikart ein within-subject-Faktor ist, müssen wir zunächst den Datensatz anpassen. Ergänzen Sie dazu folgenden Befehl: daten.long <- reshape(data = ..., direction = ..., varying = ..., timevar = "Musikart", v.names = "Erinnerung", times = ...)'
+  CorrectAnswer: daten.long <- reshape(data = daten, direction = "long", varying = c("Erinnerung.TM", "Erinnerung.FM"), timevar = "Musikart", v.names = "Erinnerung", times = c(1,2))
+  AnswerTests: omnitest(correctExpr='daten.long <- reshape(data = daten, direction = "long", varying = c("Erinnerung.TM", "Erinnerung.FM"), timevar = "Musikart", v.names = "Erinnerung", times = c(1,2))')
+  Hint: 'Der notwendige Befehl lautet: daten.long <- reshape(data = daten, direction = "long", varying = c("Erinnerung.TM", "Erinnerung.FM"), timevar = "Musikart", v.names = "Erinnerung", times = c(1,2))'
    
 - Class: cmd_question
   Output: Wandeln Sie nun die Variable id in einen Faktor um.
-  CorrectAnswer: Daten.long$id <- factor(Daten.long$id)
-  AnswerTests: omnitest(correctExpr='Daten.long$id <- factor(Daten.long$id)')
+  CorrectAnswer: daten.long$id <- factor(daten.long$id)
+  AnswerTests: omnitest(correctExpr='daten.long$id <- factor(daten.long$id)')
   Hint: 'Für die Umwandlung benötigen Sie die Funktion factor().'
  
 - Class: cmd_question
   Output: Und ebenso die Variable Musikart.
-  CorrectAnswer: Daten.long$Musikart <- factor(Daten.long$Musikart)
-  AnswerTests: omnitest(correctExpr='Daten.long$Musikart <- factor(Daten.long$Musikart)')
+  CorrectAnswer: daten.long$Musikart <- factor(daten.long$Musikart)
+  AnswerTests: omnitest(correctExpr='daten.long$Musikart <- factor(daten.long$Musikart)')
   Hint: 'Für die Umwandlung benötigen Sie die Funktion factor().'
 
+- Class: text
+  Output: 'Jetzt haben wir die Daten endlich so für die Analyse vorbereitet, wie wir sie brauchen. Wie zuvor sollten wir uns zunächst wieder einen Überblick der Daten verschaffen, bevor wir zur Hypothesenprüfung schreiten.' 
+
+- Class: cmd_question
+  Output: 'Den Befehl ezStats() kennen Sie bereits. Berechnen Sie mit diesem Befehl die passenden deskriptiven Statistiken für die abhängige Variable Erinnerung, den Messwiederholungsfaktor Musikart und den between-Faktor Reihenfolge.'
+  CorrectAnswer: ezStats(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, between=Reihenfolge)
+  AnswerTests: omnitest(correctExpr="ezStats(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, between=Reihenfolge)")
+  Hint: 'Der vollständige Befehl lautet: ezStats(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, between=Reihenfolge). Weitere Argumente sind nicht notwendig.'
+
 - Class: mult_question
-  Output: 'Die mehrfaktorielle Varianzanalyse mit den Faktoren Musikart und Reihenfolge können wir einfach berechnen, indem wir die Varianzanalyse aus Kapitel 2 (mit der UV Musikart und der AV Erinnerung) um das between-Argument ergänzen. Erinnern Sie sich zuerst an den Befehl für die einfaktorielle Varianzanalyse mit der UV Musikart. Welcher der folgenden Befehle ist für die Berechnung am besten geeignet?'
-  AnswerChoices: ezANOVA(data = Daten.long, wid = id, within = Erinnerung, dv = Musikart, type = 3, detailed = TRUE);ezANOVA(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart, type = 2, detailed = TRUE);ezANOVA(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart, type = 2, detailed = FALSE);ezANOVA(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart, type = 3, detailed = TRUE)
-  CorrectAnswer: ezANOVA(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart, type = 3, detailed = TRUE)
-  AnswerTests: omnitest(correctVal='ezANOVA(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart, type = 3, detailed = TRUE)')
+  Output: 'Unter welcher Bedingung haben die Teilnehmer im Durchschnitt die höchste Erinnerungsleistung?' 
+  AnswerChoices: nach fröhlicher Musik (Musikart 2), wenn zuerst traurige Musik gespielt wurde; nach trauriger Musik (Musikart 1), wenn zuerst traurige Musik gespielt wurde; nach fröhlicher Musik (Musikart 2), wenn zuerst fröhliche Musik gespielt wurde; nach trauriger Musik (Musikart 1), wenn zuerst fröhliche Musik gespielt wurde
+  CorrectAnswer: nach fröhlicher Musik (Musikart 2), wenn zuerst traurige Musik gespielt wurde
+  AnswerTests: omnitest(correctVal='nach fröhlicher Musik (Musikart 2), wenn zuerst traurige Musik gespielt wurde')
+  Hint: Vergleichen Sie die Mittelwerte der vier Kombinationen der Faktoren in der Ausgabe von ezStats()
+
+- Class: mult_question
+  Output: 'Nun zur eigentlichen Hypothesenprüfung. Die mehrfaktorielle Varianzanalyse mit den Faktoren Musikart und Reihenfolge können wir einfach berechnen, indem wir die Varianzanalyse aus dem Kapitel zur ANOVA abhängiger Variablen (mit der UV Musikart und der AV Erinnerung) um das between-Argument ergänzen, genau wie wir das soeben für ezStats() gemacht haben. Erinnern Sie sich zuerst an den Befehl für die einfaktorielle Varianzanalyse mit der UV Musikart. Welcher der folgenden Befehle ist für die Berechnung der einfaktoriellen Varianzanalyse am besten geeignet?'
+  AnswerChoices: ezANOVA(data = daten.long, wid = id, within = Erinnerung, dv = Musikart, type = 3, detailed = TRUE);ezANOVA(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, type = 2, detailed = TRUE);ezANOVA(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, type = 2, detailed = FALSE);ezANOVA(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, type = 3, detailed = TRUE)
+  CorrectAnswer: ezANOVA(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, type = 3, detailed = TRUE)
+  AnswerTests: omnitest(correctVal='ezANOVA(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, type = 3, detailed = TRUE)')
   Hint: Erinnern Sie sich daran, dass die Quadratsummen am besten durch den Berechnungstyp 3 bestimmt werden sollten.
 
 - Class: cmd_question
-  Output: 'Berechnen Sie nun die mehrfaktorielle Varianzanalyse mit der Variable Reihenfolge als zusätzlichem Faktor.'
-  CorrectAnswer: ezANOVA(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart, between = Reihenfolge, type = 3, detailed = TRUE)
-  AnswerTests: omnitest(correctExpr='ezANOVA(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart, between = Reihenfolge, type = 3, detailed = TRUE)')
+  Output: 'In unserem Datensatz sind aber zwei Faktoren enthalten, die in die Analyse eingehen sollten: Musikart und Reihenfolge. Berechnen Sie nun die mehrfaktorielle Varianzanalyse mit der Variable Reihenfolge als zusätzlichem Faktor.'
+  CorrectAnswer: ezANOVA(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, between = Reihenfolge, type = 3, detailed = TRUE)
+  AnswerTests: omnitest(correctExpr='ezANOVA(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, between = Reihenfolge, type = 3, detailed = TRUE)')
   Hint: 'Ergänzen Sie den Befehl aus der vorherigen Frage um das Argument between = Reihenfolge.'
   
 - Class: mult_question
@@ -60,7 +77,7 @@
   Hint: Wenn der p-Wert eines Effekts kleiner als 0.05 ist, ist der Effekt signifikant.
   
 - Class: text
-  Output: 'Den Haupteffekt Musikart haben wir uns im 2. Kapitel schon genauer angesehen. Wie Sie sich vielleicht erinnern, war die Gedächtnisleistung nach dem Hören fröhlicher Musik um ca. 3 Punkte besser. Was aber bedeutet unser Interaktionseffekt inhaltlich?'
+  Output: 'Den Haupteffekt Musikart haben wir uns im vorherigen Kapitel schon genauer angesehen. Wie Sie sich vielleicht erinnern, war die Gedächtnisleistung nach dem Hören fröhlicher Musik um ca. 3 Punkte besser. Was aber bedeutet unser Interaktionseffekt inhaltlich?'
  
 - Class: cmd_question
   Output: Bei der Interpretation des Interaktionseffektes ist es hilfreich, die Daten zu visualisieren. Dafür eignet sich die Funktion ezPlot(). Schauen Sie sich vorab die Dokumentation der Funktion an.
@@ -70,9 +87,9 @@
   
 - Class: cmd_question
   Output: 'Für eine einfache Version des Plots benötigen wir nur acht der möglichen Argumente. Die Argumente data, wid, dv, within, between und type können direkt vom Befehl für die Varianzanalyse übernommen werden. Im Argument x wird die Variable angegeben, die auf der x-Achse dargestellt, im Argument split die Variable, die auf getrennten Linien dargestellt werden soll. Erstellen Sie die Grafik, indem Sie folgenden Befehl ergänzen: ezPlot(data = ..., wid = ..., dv = ..., within = ..., between = ..., type = ..., x = Reihenfolge, split = Musikart)'
-  CorrectAnswer: ezPlot(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart, between = Reihenfolge, type = 3, x = Reihenfolge, split = Musikart)
-  AnswerTests: omnitest(correctExpr='ezPlot(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart, between = Reihenfolge, type = 3, x = Reihenfolge, split = Musikart)')
-  Hint: 'Übernehmen Sie die ersten fünf Argumente von dem Befehl für die Varianzanalyse, d.h. data = Daten.long usw.'
+  CorrectAnswer: ezPlot(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, between = Reihenfolge, type = 3, x = Reihenfolge, split = Musikart)
+  AnswerTests: omnitest(correctExpr='ezPlot(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, between = Reihenfolge, type = 3, x = Reihenfolge, split = Musikart)')
+  Hint: 'Übernehmen Sie die ersten fünf Argumente von dem Befehl für die Varianzanalyse, d.h. data = daten.long usw.'
   
 - Class: mult_question
   Output: Beantworten Sie anhand der Grafik und anhand der Ergebnisse der Varianzanalyse, welche der folgenden Aussagen korrekt ist.
@@ -83,8 +100,8 @@
 
 - Class: cmd_question
   Output: Für ein besseres Verständnis der Daten ist es häufig sinnvoll, sich einen zweiten Plot mit der umgekehrten Aufteilung der unabhängigen Variablen ausgeben zu lassen. Erstellen Sie eine zweite Grafik mit der Musikart auf der x-Achse.
-  CorrectAnswer: ezPlot(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart, between = Reihenfolge, type = 3, x = Musikart, split = Reihenfolge)
-  AnswerTests: omnitest(correctExpr='ezPlot(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart, between = Reihenfolge, type = 3, x = Musikart, split = Reihenfolge)')
+  CorrectAnswer: ezPlot(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, between = Reihenfolge, type = 3, x = Musikart, split = Reihenfolge)
+  AnswerTests: omnitest(correctExpr='ezPlot(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, between = Reihenfolge, type = 3, x = Musikart, split = Reihenfolge)')
   Hint: Die Argumente x = Reihenfolge und split = Musikart müssen in x = Musikart und split = Reihenfolge geändert werden.
 
 - Class: mult_question
@@ -98,9 +115,9 @@
   Output: 'Gibt es mehr als zwei Faktoren oder sind beide Faktoren between-subject-Variablen bzw. within-subject-Variablen, müssen die Variablen in Form von Listen angegeben werden. Das sieht  folgendermaßen aus: between = .(Variablenname_1, Variablenname_2) bzw. within = .(Variablenname_1, Variablenname_2)'
  
 - Class: cmd_question
-  Output: 'Probieren Sie das einmal aus, indem Sie eine Varianzanalyse mit der AV Erinnerung und den UV Musikart, Reihenfolge und Geschlecht berechnen: ezANOVA(data = Daten.long, wid = id, dv = Erinnerung, within = ..., between = ..., type = 3, detailed = TRUE)'
-  CorrectAnswer: ezANOVA(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart, between = .(Reihenfolge, Geschlecht), type = 3, detailed = TRUE)
-  AnswerTests: any_of_exprs('ezANOVA(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart, between = .(Reihenfolge, Geschlecht), type = 3, detailed = TRUE)', 'ezANOVA(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart, between = .(Geschlecht, Reihenfolge), type = 3, detailed = TRUE)')
+  Output: 'Probieren Sie das einmal aus, indem Sie eine Varianzanalyse mit der AV Erinnerung und den UV Musikart, Reihenfolge und Geschlecht berechnen: ezANOVA(data = daten.long, wid = id, dv = Erinnerung, within = ..., between = ..., type = 3, detailed = TRUE)'
+  CorrectAnswer: ezANOVA(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, between = .(Reihenfolge, Geschlecht), type = 3, detailed = TRUE)
+  AnswerTests: any_of_exprs('ezANOVA(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, between = .(Reihenfolge, Geschlecht), type = 3, detailed = TRUE)', 'ezANOVA(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, between = .(Geschlecht, Reihenfolge), type = 3, detailed = TRUE)')
   Hint: Reihenfolge und Geschlecht sind between-subject-Variablen während Musikart eine within-subject-Variable ist.
 
 - Class: text
@@ -112,6 +129,13 @@
   CorrectAnswer: Haupteffekt Musikart
   AnswerTests: omnitest(correctVal='Haupteffekt Musikart')
   Hint: Vergleichen Sie die eta-Quadrat-Werte der drei Effekte. Welcher ist am größten?
+
+- Class: text
+  Output: 'Hier nochmal im Überblick, wie wir für die Analyse vorgegangen sind:
+  1. reshape(), um die Daten in das Longformat umzuformen;
+  2. ezStats(), um einen Überblick der Daten zu erhalten;
+  3. ezANOVA() mit den Argumenten within und between, für die eigentliche Varianzanalyse;
+  4. ezPlot(), um das Ergebnis auch graphisch darzustellen'
  
 - Class: text
   Output: Sie können nun Varianzanalysen für die meisten Anwendungsfälle berechnen und interpretieren. Herzlichen Glückwunsch!
