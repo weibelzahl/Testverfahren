@@ -4,19 +4,16 @@
   Author: Lea Dammann, Stephan Weibelzahl
   Type: Standard
   Organization: PFH Göttingen
-  Version: 0.1
-
-# ToDo: Daten -> daten
-# reshape2 statt reshape
+  Version: 0.2
   
 - Class: text
   Output: Nachdem Sie in der letzten Übung gelernt haben, wie einfaktorielle Varianzanalysen für unabhängige Stichproben in R berechnet werden können, wollen wir uns in der dieser Übung mit Varianzanalysen für abhängige Stichproben befassen.
  
 - Class: cmd_question
-  Output: Wir haben wieder einen Datensatz namens Daten für Sie erstellt. Machen Sie sich zuerst unter Verwendung der Funktion str() mit dem Datensatz vertraut.
-  CorrectAnswer: str(Daten)
-  AnswerTests: omnitest(correctExpr='str(Daten)')
-  Hint: Tippen Sie str(Daten) in die Konsole, um zu sehen, wie der Datensatz aufgebaut ist.
+  Output: Wir haben wieder einen Datensatz namens daten für Sie erstellt. Machen Sie sich zuerst unter Verwendung der Funktion str() mit dem Datensatz vertraut.
+  CorrectAnswer: str(daten)
+  AnswerTests: omnitest(correctExpr='str(daten)')
+  Hint: Tippen Sie str(daten) in die Konsole, um zu sehen, wie der Datensatz aufgebaut ist.
  
 - Class: cmd_question
   Output: Aus wie vielen Zeilen besteht der Datensatz, d.h. wie viele Versuchspersonen haben an dem zugrunde liegendem (fiktiven) Experiment teilgenommen?
@@ -50,7 +47,7 @@
   Hint: Tippen Sie ?reshape in die Konsole, um die Hilfeseite aufzurufen.
 
 - Class: text
-  Output: 'Das Argument direction dient dazu festzulegen, in welche Richtung der Datensatz verändert werden soll. Da wir den Datensatz von einer zeilenweisen Darstellung jeder Versuchsperson in ein Format bringen möchten, welches passend für die Varianzanalyse für abhängige Stichproben ist, müssen wir direction="long" wählen. Dem Argument data kann der Datensatz übergeben werden, der verändert werden soll (d.h. in unserem Fall data=Daten).' 
+  Output: 'Das Argument direction dient dazu festzulegen, in welche Richtung der Datensatz verändert werden soll. Da wir den Datensatz von einer zeilenweisen Darstellung jeder Versuchsperson in ein Format bringen möchten, welches passend für die Varianzanalyse für abhängige Stichproben ist, müssen wir direction="long" wählen. Dem Argument data kann der Datensatz übergeben werden, der verändert werden soll (d.h. in unserem Fall data=daten).' 
 
 - Class: mult_question
   Output: 'Dem Argument varying wird eine Liste von Vektoren oder alternativ ein einziger Vektor übergeben, der die Namen der Variablen des ursprünglichen Datensatzes enthält, deren Werte im neuen Datensatz zu einer Variablen zusammengefasst werden. In unserem Fall sind dies die Variablen Erinnerung.TM und Erinnerung.FM, deren Werte die Gedächtnisleistung der Probanden widerspiegeln und die zu unserer abhängigen Variablen "Erinnerung" zusammengefasst werden sollen. Welches der folgenden Argumente ist für unsere Zwecke geeignet?' 
@@ -70,37 +67,37 @@
   Hint: Wir benötigen einen numerischen Vektor, d.h. der Vektor darf nur Zahlen enthalten.
 
 - Class: cmd_question
-  Output: 'Jetzt können wir den Datensatz verändern. Ergänzen Sie dafür folgenden Befehl: Daten.long <- reshape(data = ..., direction = ..., varying = ..., timevar = ..., v.names = ..., times = ...)'
-  CorrectAnswer: Daten.long <- reshape(data = Daten, direction = "long", varying = c("Erinnerung.TM", "Erinnerung.FM"), timevar = "Musikart", v.names = "Erinnerung", times = c(1,2))
-  AnswerTests: omnitest(correctExpr='Daten.long <- reshape(data = Daten, direction = "long", varying = c("Erinnerung.TM", "Erinnerung.FM"), timevar = "Musikart", v.names = "Erinnerung", times = c(1,2))')
+  Output: 'Jetzt können wir den Datensatz verändern. Ergänzen Sie dafür folgenden Befehl: daten.long <- reshape(data = ..., direction = ..., varying = ..., timevar = ..., v.names = ..., times = ...)'
+  CorrectAnswer: daten.long <- reshape(data = daten, direction = "long", varying = c("Erinnerung.TM", "Erinnerung.FM"), timevar = "Musikart", v.names = "Erinnerung", times = c(1,2))
+  AnswerTests: omnitest(correctExpr='daten.long <- reshape(data = daten, direction = "long", varying = c("Erinnerung.TM", "Erinnerung.FM"), timevar = "Musikart", v.names = "Erinnerung", times = c(1,2))')
   Hint: Schauen Sie sich die vorhergehenden Teile der Übung an, um herauszufinden, wie Sie die Argumente vervollständigen müssen.
   
 - Class: cmd_question
   Output: 'Bei der Umwandlung des Datensatzes wird automatisch eine id-Variable erstellt, anhand derer erkennbar ist, welche Daten von welcher Versuchsperson stammen. Dies ist notwendig, da die Daten einer Versuchsperson nun in mehreren Zeilen stehen. Am besten schauen Sie sich den Datensatz einmal an. Verwenden Sie dafür den Befehl View().'
-  CorrectAnswer: View(Daten.long)
-  AnswerTests: omnitest(correctExpr="View(Daten.long)")
-  Hint: Der richtige Befehl lautet View(Daten.long). Achten Sie darauf, dass der Befehl View() mit einem Großbuchstaben beginnt.
+  CorrectAnswer: View(daten.long)
+  AnswerTests: omnitest(correctExpr="View(daten.long)")
+  Hint: Der richtige Befehl lautet View(daten.long). Achten Sie darauf, dass der Befehl View() mit einem Großbuchstaben beginnt.
  
 - Class: cmd_question
-  Output: 'Bevor wir uns der Varianzanalyse zuwenden können, müssen wir die Variablen id und Musikart in Faktoren umwandeln. Nutzen Sie den Befehl Daten.long$id <- factor(Daten.long$id), um die id-Variable in einen Vektor aus Zeichenketten umzuwandeln.'
-  CorrectAnswer: Daten.long$id <- factor(Daten.long$id)
-  AnswerTests: omnitest(correctExpr="Daten.long$id <- factor(Daten.long$id)")
-  Hint: Tippen Sie Daten.long$id <- factor(Daten.long$id) in die Konsole.
+  Output: 'Bevor wir uns der Varianzanalyse zuwenden können, müssen wir die Variablen id und Musikart in Faktoren umwandeln. Nutzen Sie den Befehl daten.long$id <- factor(daten.long$id), um die id-Variable in einen Vektor aus Zeichenketten umzuwandeln.'
+  CorrectAnswer: daten.long$id <- factor(daten.long$id)
+  AnswerTests: omnitest(correctExpr="daten.long$id <- factor(daten.long$id)")
+  Hint: Tippen Sie daten.long$id <- factor(daten.long$id) in die Konsole.
   
 - Class: cmd_question
   Output: 'Verwandeln Sie nun auf die gleiche Art und Weise die Variable Musikart in einen Faktor.'
-  CorrectAnswer: Daten.long$Musikart <- factor(Daten.long$Musikart)
-  AnswerTests: omnitest(correctExpr="Daten.long$Musikart <- factor(Daten.long$Musikart)")
-  Hint: Tippen Sie Daten.long$Musikart <- factor(Daten.long$Musikart) in die Konsole, um aus der Variablen Musikart einen Faktor zu machen.
+  CorrectAnswer: daten.long$Musikart <- factor(daten.long$Musikart)
+  AnswerTests: omnitest(correctExpr="daten.long$Musikart <- factor(daten.long$Musikart)")
+  Hint: Tippen Sie daten.long$Musikart <- factor(daten.long$Musikart) in die Konsole, um aus der Variablen Musikart einen Faktor zu machen.
 
 - Class: text
   Output: 'Jetzt haben wir die Daten endlich so für die Analyse vorbereitet, wie wir sie brauchen. Bevor wir jetzt die eigentliche Varianzanalyse berechnen, sollten wir uns zunächst einen Überblick der Daten verschaffen.' 
 
 - Class: cmd_question
   Output: 'Einen solchen Überblick gibt uns der Befehl ezStats(), den Sie bereits kennen. Berechnen Sie mit diesem Befehl die passenden deskriptiven Statistiken für die abhängige Variable Erinnerung und den Messwiederholungsfaktor Musikart.'
-  CorrectAnswer: ezStats(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart)
-  AnswerTests: omnitest(correctExpr="ezStats(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart)")
-  Hint: 'Der vollständige Befehl lautet: ezStats(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart). Weitere Argumente sind nicht notwendig.'
+  CorrectAnswer: ezStats(data = daten.long, wid = id, dv = Erinnerung, within = Musikart)
+  AnswerTests: omnitest(correctExpr="ezStats(data = daten.long, wid = id, dv = Erinnerung, within = Musikart)")
+  Hint: 'Der vollständige Befehl lautet: ezStats(data = daten.long, wid = id, dv = Erinnerung, within = Musikart). Weitere Argumente sind nicht notwendig.'
 
 - Class: mult_question
   Output: 'Unter welcher Bedingung haben die Teilnehmer im Durchschnitt die höhere Erinnerungsleistung?' 
@@ -114,9 +111,9 @@
 
 - Class: cmd_question
   Output: 'Testen Sie, ob sich die Erinnerungsleistung nach trauriger Musik von der nach fröhlicher Musik unterscheidet, indem Sie folgenden Befehl ergänzen: ezANOVA(data = ..., wid = ..., dv = ..., within = ..., type = 3, detailed = TRUE)'
-  CorrectAnswer: ezANOVA(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart, type = 3, detailed = TRUE)
-  AnswerTests: omnitest(correctExpr="ezANOVA(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart, type = 3, detailed = TRUE)")
-  Hint: 'Der vollständige Befehl lautet: ezANOVA(data = Daten.long, wid = id, dv = Erinnerung, within = Musikart, type = 3, detailed = TRUE)'
+  CorrectAnswer: ezANOVA(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, type = 3, detailed = TRUE)
+  AnswerTests: omnitest(correctExpr="ezANOVA(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, type = 3, detailed = TRUE)")
+  Hint: 'Der vollständige Befehl lautet: ezANOVA(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, type = 3, detailed = TRUE)'
  
 - Class: mult_question
   Output: 'Schauen Sie sich den Output der ANOVA an. Gibt es einen signifikanten Unterschied zwischen der Erinnerungsleistung nach trauriger Musik und der nach fröhlicher Musik?'
@@ -130,13 +127,13 @@
 
 - Class: cmd_question
   Output: 'Wie Sie wissen, können wir uns das Ergebnis auch leicht in einem Diagramm anzeigen lassen. Verwenden Sie dafür den Befehl ezPlot(). Die erforderlichen Argumente sind fast die gleichen, wie Sie sie mit dem Befehl ezStats() verwendet haben: data, dv, wid und within. Neu hinzu kommt nur noch x=Musikart, um anzuzeigen, dass die Musikart auf der x-Achse abgetragen werden soll.'
-  CorrectAnswer: ezPlot(Daten.long, Erinnerung, id, within = Musikart, x = Musikart)
-  AnswerTests: omnitest(correctExpr="ezPlot(Daten.long, Erinnerung, id, within = Musikart, x = Musikart)")
-  Hint: 'Der vollständige Befehl lautet: ezPlot(Daten.long, Erinnerung, id, within = Musikart, x = Musikart)'
+  CorrectAnswer: ezPlot(daten.long, Erinnerung, id, within = Musikart, x = Musikart)
+  AnswerTests: omnitest(correctExpr="ezPlot(daten.long, Erinnerung, id, within = Musikart, x = Musikart)")
+  Hint: 'Der vollständige Befehl lautet: ezPlot(daten.long, Erinnerung, id, within = Musikart, x = Musikart)'
 
 - Class: text
   Output: 'Hier nochmal im Überblick, wie wir für die Analyse vorgegangen sind:
-  1. reshape(), um die Daten in das Longformat zu bekommen;
+  1. reshape(), um die Daten in das Longformat umzuformen;
   2. ezStats(), um einen Überblick der Daten zu erhalten;
   3. ezANOVA() mit dem neuen Argument within, für die eigentliche Varianzanalyse;
   4. ezPlot(), um das Ergebnis auch graphisch darzustellen'
