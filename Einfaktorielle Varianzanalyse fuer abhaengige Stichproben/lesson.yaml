@@ -7,7 +7,7 @@
   Version: 0.2
   
 - Class: text
-  Output: Nachdem Sie in der letzten Übung gelernt haben, wie einfaktorielle Varianzanalysen für unabhängige Stichproben in R berechnet werden können, wollen wir uns in der dieser Übung mit Varianzanalysen für abhängige Stichproben befassen.
+  Output: Nachdem Sie in der letzten Übung gelernt haben, wie einfaktorielle Varianzanalysen für unabhängige Stichproben in R berechnet werden können, wollen wir uns in dieser Übung mit Varianzanalysen für abhängige Stichproben befassen.
  
 - Class: cmd_question
   Output: Wir haben wieder einen Datensatz namens daten für Sie erstellt. Machen Sie sich zuerst unter Verwendung der Funktion str() mit dem Datensatz vertraut.
