@@ -116,8 +116,7 @@
  
 - Class: cmd_question
   Output: 'Probieren Sie das einmal aus, indem Sie eine Varianzanalyse mit der AV Erinnerung und den UV Musikart, Reihenfolge und Geschlecht berechnen: ezANOVA(data = daten.long, wid = id, dv = Erinnerung, within = ..., between = ..., type = 3, detailed = TRUE)'
-  CorrectAnswer: 
-  ezANOVA(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, between = .(Reihenfolge, Geschlecht), type = 3, detailed = TRUE)
+  CorrectAnswer: ezANOVA(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, between = .(Reihenfolge, Geschlecht), type = 3, detailed = TRUE)
   AnswerTests: any_of_exprs('ezANOVA(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, between = .(Reihenfolge, Geschlecht), type = 3, detailed = TRUE)', 'ezANOVA(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, between = .(Geschlecht, Reihenfolge), type = 3, detailed = TRUE)', 'ezANOVA(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, type = 3, detailed = TRUE, between = .(Reihenfolge, Geschlecht))', 'ezANOVA(data = daten.long, wid = id, dv = Erinnerung, within = Musikart, type = 3, detailed = TRUE, between = .(Geschlecht, Reihenfolge))')
   Hint: Reihenfolge und Geschlecht sind between-subject-Variablen während Musikart eine within-subject-Variable ist.
 
