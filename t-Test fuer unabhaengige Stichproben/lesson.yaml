@@ -1,0 +1,148 @@
+- Class: meta
+  Course: Testverfahren
+  Lesson: t-Test für unabhängige Stichproben
+  Author: Stephan Weibelzahl
+  Type: Standard
+  Organization: PFH Göttingen
+  Version: 0.1
+  
+- Class: text
+  Output: In diesem Kapitel lernen Sie, wie man einen t-Test für unabhängige Stichproben berechnet.
+
+- Class: text
+  Output: Wir verwenden die Daten aus einer Replikation einer Studie von McCrea (2008), in der es um sogenanntes self-handicapping geht.
+  
+- Class: text
+  Output: "Sie können die Details hier nachlesen:\n\n McCrea, S. M. (2008). Self-handicapping, excuse making, and counterfactual thinking: consequences for self-esteem and future motivation. Journal of Personality and Social Psychology, 95(2), 274."
+  
+- Class: text
+  Output: "Self-handicapping bedeutet, dass man vor einer Bewertungssituation wie beispielsweise einem Test eine Beeinträchtigung schafft, die im Falle eines Misserfolgs als Ausrede dienen kann.
+  Die Beeinträchtigung kann verhaltensbasiert (also tatsächlich) oder nur behauptet sein."
+
+- Class: mult_question
+  Output: "Stellen Sie sich vor, Schüler sollen einen Mathetest schreiben. Was wäre eine mögliche verhaltensbasierte self-handicapping Strategie?"
+  AnswerChoices: sehr spät mit dem Lernen beginnen; möglichst früh mit dem Lernen beginnen; den Mitschülern erzählen, man habe in der Nacht vor dem Test nicht schlafen können
+  CorrectAnswer: sehr spät mit dem Lernen beginnen
+  AnswerTests: omnitest(correctVal="sehr spät mit dem Lernen beginnen")
+  Hint: Nicht geschlafen zu haben, ist nur eine Behauptung. Sehr spät mit dem Lernen zu beginnen ist eine tatsächliche Beeinträchtigung.
+  
+- Class: text
+  Output: In der Studie von McCrea hatten die Teilnehmer Gelegenheit für einen Mathetest zu üben. In der Experimentalbedingung lasen die Teilnehmer vor der Übung angebliche Aussagen von vorherigen Teilnehmern. Diese suggerierten ein mögliches Handicap ('Mit mehr Übung hätte ich besser abgeschnitten'). In der Kontrollbedingung waren die Aussagen neutral gehalten ('Der Test war interessant.')
+
+- Class: text
+  Output: Die Teilnehmer konnten nun selbst entscheiden, wie viele Übungsaufgaben sie innerhalb von maximal 4 Minuten bearbeiten, um sich auf den tatsächlichen Test vorzubereiten. Es wurde sowohl die Anzahl der Übungsaufgaben, als auch die Anzahl der richtigen Lösungen aufgezeichnet.  
+
+- Class: mult_question
+  Output: "Welches Verhalten würden wir erwarten, wenn Teilnehmer self-handicapping nutzen?"
+  AnswerChoices: sie würden weniger Übungsaufgaben machen; sie würden mehr Übungsaufgaben machen; sie würden einen höheren Prozentsatz der Aufgaben richtig lösen
+  CorrectAnswer: sie würden weniger Übungsaufgaben machen
+  AnswerTests: omnitest(correctVal="sie würden weniger Übungsaufgaben machen")
+  Hint: Es wäre eine Beeinträchtigung, wenn die Teilnehmer weniger Übungsaufgaben machen, um sich auf den Test vorzubereiten.
+  
+- Class: mult_question
+  Output: "Welche Gruppe wird vermutlich mehr self-handicapping zeigen?"
+  AnswerChoices: die Experimentalgruppe, die entsprechende Aussagen gelesen hat; die Kontrollgruppe, die neutrale Aussagen gelesen hat
+  CorrectAnswer: die Experimentalgruppe, die entsprechende Aussagen gelesen hat
+  AnswerTests: omnitest(correctVal="die Experimentalgruppe, die entsprechende Aussagen gelesen hat")
+  Hint: Self-handicapping, sollte vor allem in der Experimentalgruppe auftreten.
+  
+- Class: cmd_question
+  Output: Wir haben einen Datensatz namens daten für Sie erstellt. Machen Sie sich zuerst unter Verwendung der Funktion str() mit dem Datensatz vertraut.
+  CorrectAnswer: str(daten)
+  AnswerTests: omnitest(correctExpr='str(daten)')
+  Hint: Tippen Sie str(daten) in die Konsole, um zu sehen, wie der Datensatz aufgebaut ist.
+ 
+- Class: cmd_question
+  Output: Aus wie vielen Zeilen besteht der Datensatz, d.h. wie viele Versuchspersonen haben an dem zugrunde liegenden Experiment teilgenommen?
+  CorrectAnswer: 61
+  AnswerTests: omnitest(correctVal='61')
+  Hint: Die Anzahl der Zeilen wird in R mit obs. abgekürzt, das für observations (auf Deutsch Beobachtungen) steht. 6 obs. bedeutet beispielsweise, dass der Datensatz 6 Zeilen enthält. Tippen Sie die Zahl ein.
+
+- Class: text
+  Output: Es haben also 61 Personen an der Studie teilgenommen. Von jeder Person wurden jeweils vier Angaben erfasst, die in den vier Variablen gespeichert sind.  
+  
+- Class: mult_question
+  Output: "In welcher Variable ist vermutlich die Anzahl der versuchten Übungsaufgaben gespeichert?"
+  AnswerChoices: Subject; Attempted; Cond; Correct
+  CorrectAnswer: Attempted
+  AnswerTests: omnitest(correctVal="Attempted")
+  Hint: Attempted steht für versucht.
+  
+- Class: mult_question
+  Output: "In welcher Variable ist vermutlich die Versuchsbedingung gespeichert?"
+  AnswerChoices: Subject; Attempted; Cond; Correct
+  CorrectAnswer: Cond
+  AnswerTests: omnitest(correctVal="Cond")
+  Hint: Cond ist die Abkürzung von Condition, also Bedingung.
+
+- Class: text
+  Output: "Derzeit ist die Bedingung als einfache Zahl (1 oder 2) hinterlegt. Damit wir die Ergebnisse später besser interpretieren können, sollten wir die Variable Cond in eine nominal-skalierte Variable (in R 'factor' genannt) umwandeln und die Bedingungen richtig benennen."
+
+- Class: cmd_question
+  Output: Erstellen Sie aus der Variable Cond eine neue Variable mit dem Namen Condition. Diese soll den Typ factor haben. Dabei soll 1 für die Bedingung Handicap und 2 für die Bedingung Control stehen.
+  CorrectAnswer: 'daten$Condition <- factor(daten$Cond, levels=c(1, 2), labels=c("Handicap", "Control"))'
+  AnswerTests: any_of_exprs('daten$Condition <- factor(daten$Cond, levels=c(1, 2), labels=c("Handicap", "Control"))', 'daten$Condition = factor(daten$Cond, levels=c(1, 2), labels=c("Handicap", "Control"))')
+  Hint: 'Ein Möglichkeit den neuen Faktor zu erstellen sieht so aus: daten$Condition <- factor(daten$Cond, levels=c(1, 2), labels=c("Handicap", "Control"))'
+
+- Class: cmd_question
+  Output: Verschaffen wir uns zunächst einen Überblick. Berechnen Sie die durchschnittliche Anzahl an Übungsaufgaben, die die Teilnehmer versucht haben zu lösen.
+  CorrectAnswer: mean(daten$Attempted)
+  AnswerTests: omnitest(correctVal=mean(daten$Attempted))
+  Hint: "Die mittlere Anzahl ergibt sich aus: mean(daten$Attempted)"
+
+- Class: cmd_question
+  Output: Wie viele Übungausgaben hat die Experimentalgruppe im Durchschnitt versucht zu lösen?
+  CorrectAnswer: mean(daten$Attempted[daten$Condition == "Handicap"])
+  AnswerTests: omnitest(correctVal=mean(daten$Attempted[daten$Condition == "Handicap"]))
+  Hint: 'Die Experimentalgruppe ist mit Handicap gekennzeichnet. Wir können aus der Variable Attempted die relevanten Einträge mit dem folgenden Befehl herausfiltern: mean(daten$Attempted[daten$Condition == "Handicap"])'
+
+- Class: cmd_question
+  Output: Wie viele Übungausgaben hat die Kontrollgruppe im Durchschnitt versucht zu lösen?
+  CorrectAnswer: mean(daten$Attempted[daten$Condition == "Control"])
+  AnswerTests: omnitest(correctVal=mean(daten$Attempted[daten$Condition == "Control"]))
+  Hint: Die Kontrollgruppe ist mit Control gekennzeichnet. Sie müssen also im Vergleich zum vorherigen Befehl nur Handicap durch Control ersetzen.
+
+- Class: mult_question
+  Output: "Welche Gruppe hat mehr Übungsaufgaben versucht zu lösen?"
+  AnswerChoices: Experimentalgruppe; Kontrollgruppe
+  CorrectAnswer: Kontrollgruppe
+  AnswerTests: omnitest(correctVal="Kontrollgruppe")
+  Hint: Vergleichen Sie die soeben berechneten Durchschnittswerte der beiden Gruppen.
+
+- Class: cmd_question
+  Output: "Stellen Sie den Vergleich der Gruppen in Bezug auf die Variable Attempted in einem Boxplot dar. Tipp: boxplot(x~y, data=meineDaten)"
+  CorrectAnswer: boxplot(Attempted~Condition, data = daten)
+  AnswerTests: any_of_exprs('boxplot(daten$Attempted~daten$Condition)', 'boxplot(daten$Attempted[daten$Condition == "Handicap"], daten$Attempted[daten$Condition == "Control"])', 'boxplot(Attempted~Condition, data = daten)')
+  Hint: "Am einfachsten geht dies mit der Formelschreibweise: boxplot(Attempted~Condition, data = daten)"
+
+- Class: text
+  Output: "Der Boxplot zeigt, dass sich die Verteilungen der beiden Bedingungen stark überlappen. Nach Augenschein könnte man hier nicht entscheiden, ob sich die Bedingungen systematisch unterscheiden oder nicht."
+
+  
+  
+- Class: mult_question
+  Output: "Nun sind wir bereit für den t-Test. Wie lautet die Nullhypothese für diesen Test?"
+  AnswerChoices: die Populationsmittelwerte der Handicap-Bedingung und der Kontroll-Bedingung unterscheiden sich nicht; die Stichprobenmittelwerte der Handicap-Bedingung und der Kontroll-Bedingung unterscheiden sich nicht; der Populationsmittelwert der Handicap-Bedingung ist Null; der Stichprobenmittelwert der Handicap-Bedingung ist Null
+  CorrectAnswer: die Populationsmittelwerte der Handicap-Bedingung und der Kontroll-Bedingung unterscheiden sich nicht
+  AnswerTests: omnitest(correctVal="die Populationsmittelwerte der Handicap-Bedingung und der Kontroll-Bedingung unterscheiden sich nicht")
+  Hint: Hypothesen beziehen sich immer auf die Population. Beim t-Test werden die Populationsmittelwerte von zwei Bedingungen oder zwei Gruppen verglichen.
+  
+- Class: mult_question
+  Output: "Weiterhin müssen wir entscheiden, ob es sich um eine gerichtete oder eine ungerichtete Hypothesenprüfung handelt. Der Autor hatte vermutet, dass die Handicap-Gruppe weniger Übungsaufgaben machen würde. Welche Art von Alternativhypothese scheint hier angemessen?"
+  AnswerChoices: gerichtet;ungerichtet;begradigt;vermindert
+  CorrectAnswer: gerichtet
+  AnswerTests: omnitest(correctVal="gerichtet")
+  Hint: Wenn ein Unterschied zwischen den Populationsmittelwerten nur in einer Richtung erwartet wird, sollte gerichtet getestet werden.
+  
+ # Formel  
+- Class: figure
+  Output: "In Ihrer Plotanzeige sollten jetzt die Null- und die Alternativ-Hypothese zu sehen sein. Der griechische Buchstabe 'mü' steht für den Mittelwert der Population."
+  Figure: formula.R
+  FigureType: new  
+  
+
+
+
+  
+- Class: text
+  Output: 'In dieser Übung haben Sie gelernt, die Funktion ezANOVA auf abhängige Stichproben anzuwenden und können damit alle einfaktoriellen Varianzanalysen mit festen Effekten berechnen. Im nächsten Kapitel werden Sie das Gelernte auf mehrfaktorielle Varianzanalysen übertragen.'

@@ -1,0 +1,11 @@
+plot(daten$satisfaction, daten$haveWant)
+abline(v = mean(daten$satisfaction), col="red")
+abline(h = mean(daten$haveWant), col="red")
+text(x = 3, y = .85, labels = "B", col = "red", cex=3)
+text(x = 6, y = .85, labels = "A", col = "red", cex=3)
+text(x = 3, y = .6, labels = "C", col = "red", cex=3)
+text(x = 6, y = .6, labels = "D", col = "red", cex=3)
+
+# daten$s_über <- daten$satisfaction > mean(daten$satisfaction)
+# daten$h_über <- daten$haveWant > mean(daten$haveWant)
+# table(daten$s_über, daten$h_über)

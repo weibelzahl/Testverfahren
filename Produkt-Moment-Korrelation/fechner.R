@@ -1,0 +1,7 @@
+plot(daten$satisfaction, daten$haveWant)
+abline(v = mean(daten$satisfaction), col="red")
+abline(h = mean(daten$haveWant), col="red")
+text(x = 3, y = .85, labels = "-", col = "red", cex=5)
+text(x = 6, y = .85, labels = "+", col = "red", cex=5)
+text(x = 3, y = .6, labels = "+", col = "red", cex=5)
+text(x = 6, y = .6, labels = "-", col = "red", cex=5)

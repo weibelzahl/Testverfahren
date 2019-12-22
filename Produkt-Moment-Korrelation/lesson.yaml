@@ -1,0 +1,277 @@
+- Class: meta
+  Course: Testverfahren
+  Lesson: Produkt-Moment-Korrelation
+  Author: Stephan Weibelzahl
+  Type: Standard
+  Organization: PFH Göttingen
+  Version: 0.1
+  
+- Class: text
+  Output: In diesem Kapitel lernen Sie, was eine Produkt-Moment-Korrelation ist.
+  
+- Class: text
+  Output: Wir verwenden die Daten aus einer Replikation einer Studie von Larsen and McKibban (2008), in der es darum geht, ob Menschen glücklich sind, weil sie haben, was Sie sich wünschen oder weil sie sich das wünschen, was sie haben.
+  
+- Class: text
+  Output: "Sie können die Details hier nachlesen:\n\n Larsen, J. T., & McKibban, A. R. (2008). Is happiness having what you want, wanting what you have, or both?. Psychological Science, 19(4), 371-377."
+  
+- Class: text
+  Output: "Die Teilnehmer beantworteten unter anderem die Satisfaction with Life Scale (SWLS), also ein standardisierter Fragebogen zur Lebenszufriedenheit. Danach wurden sie gefragt, ob sie bestimmte Dinge haben bzw. besitzen. Zum Beispiel: Besitzen Sie einen Fernseher?"
+
+- Class: text
+  Output: "Wer auf diese Frage mit Ja antwortete, wurde dann gefragt: Wie sehr wünschen Sie sich den Fernseher, den Sie haben?"
+
+- Class: text
+  Output: "Antwortete die Person dagegen mit Nein, war die nächste Frage: Wie sehr wünschen Sie sich einen Fernseher?"
+
+- Class: text
+  Output: "So ergaben sich drei Variablen: satisfaction (Zufriedenheit), wantHave (Grad, wie sehr sich jemand wünscht, was er hat) und haveWant (Grad, inwieweit jemand hat, was er sich wünscht)."
+
+# Deskriptive Statistik
+- Class: cmd_question
+  Output: Wir haben einen Datensatz namens daten für Sie erstellt. Machen Sie sich zuerst unter Verwendung der Funktion str() mit dem Datensatz vertraut.
+  CorrectAnswer: str(daten)
+  AnswerTests: omnitest(correctExpr='str(daten)')
+  Hint: Tippen Sie str(daten) in die Konsole, um zu sehen, wie der Datensatz aufgebaut ist.
+
+- Class: mult_question
+  Output: "Wie viele Variablen sind in dem Datensatz insgeamt enthalten?"
+  AnswerChoices: 3 Variablen;4 Variablen;238 Variablen
+  CorrectAnswer: 4 Variablen
+  AnswerTests: omnitest(correctVal="4 Variablen")
+  Hint: "Aus der ersten Zeile der Ausgabe ist zu entnehmen: 238 Beobachtungen (obs.) und 4 Variablen."
+
+# 10
+- Class: cmd_question
+  Output: Verschaffen wir uns zunächst einen Überblick. Verwenden Sie den summary() Befehl, um eine Zusammenfassung des Datensatzes zu erhalten.
+  CorrectAnswer: summary(daten)
+  AnswerTests: omnitest(correctVal=summary(daten))
+  Hint: "Einen Zusammenfassung des Datensatz daten erhalten Sie mit dem Befehl summary(daten)."
+
+- Class: mult_question
+  Output: "Was denken Sie, gibt es einen Zusammenhang zwischen der Lebenszufriedenheit und dem Grad, wieweit jemand das hat, was er sich wünscht?"
+  AnswerChoices: Ja, je eher jemand hat, was er sich wünscht, desto zufriedener; Nein, die Variablen hängen nicht zusammen.;Woher soll ich das wissen?
+  CorrectAnswer: Ja, je eher jemand hat, was er sich wünscht, desto zufriedener
+  AnswerTests: TRUE
+  Hint: Alle Antworten sind erlaubt. 
+
+# Scatterplot  
+- Class: cmd_question
+  Output: Vorerst können wir hier nur raten. Bei der Berechnung von Zusammenhängen, ist es immer eine gute Idee, zunächst einen Scatterplot zu erstellen. Erstellen Sie mit dem Befehl plot() ein Diagramm der Variablen satisfaction auf der x-Achse und haveWant auf der y-Achse.
+  CorrectAnswer: plot(daten$satisfaction, daten$haveWant)
+  AnswerTests: omnitest(correctVal=plot(daten$satisfaction, daten$haveWant))
+  Hint: "Der folgende Befehl führt zum Ziel: plot(daten$satisfaction, daten$haveWant). Achten Sie auf Groß-Klein-Schreibung."
+
+- Class: mult_question
+  Output: "Betrachten Sie den Scatterplot. Was denken Sie nun? Gibt es einen Zusammenhang zwischen der Lebenszufriedenheit und dem Grad, wieweit jemand das hat, was er sich wünscht?"
+  AnswerChoices: Ja, je eher jemand hat, was er sich wünscht, desto zufriedener ist er; Ja, je eher jemand hat, was er sich wünscht, desto weniger zufriedener ist er; Nein, die Variablen hängen nicht zusammen.
+  CorrectAnswer: Ja, je eher jemand hat, was er sich wünscht, desto zufriedener ist er
+  AnswerTests: omnitest(correctVal="Ja, je eher jemand hat, was er sich wünscht, desto zufriedener ist er")
+  Hint: Wie liegt die Punktewolke? Je höher Zufriedenheit desto zufriedener oder umgekehrt? 
+
+- Class: text
+  Output: Teilnehmer, die hohe Werte in Zufriedenheit haben, haben meist auch höhere Werte in haveWant. 
+
+- Class: cmd_question
+  Output: "Berechnen Sie nun den Mittelwert der Variable satisfaction."
+  CorrectAnswer: mean(daten$satisfaction)
+  AnswerTests: omnitest(correctVal=mean(daten$satisfaction))
+  Hint: "Der folgende Befehl führt zum Ziel: mean(daten$satisfaction). Achten Sie auf Groß-Klein-Schreibung."
+
+- Class: mult_question
+  Output: "Wenn eine Person einen Zufriedenheitswert größer als dieser Mittelwert hat, dann wird sie vermutlich ..."
+  AnswerChoices: einen überdurchschnittlichen haveWant-Wert haben;einen unterdurchschnittlichen haveWant-Wert haben; einen mittleren haveWant-Wert haben 
+  CorrectAnswer: einen überdurchschnittlichen haveWant-Wert haben
+  AnswerTests: omnitest(correctVal="einen überdurchschnittlichen haveWant-Wert haben")
+  Hint: "Schauen Sie noch einmal auf den Scatterplot. Welche Aussage ist richtig? Wenn eine Person einen Zufriedenheitswert größer als dieser Mittelwert hat, dann wird sie vermutlich ..."
+  
+# Fechner  
+- Class: figure
+  Output: "In Ihrer Plotanzeige sollten jetzt im Scatterplot die Mittelwerte der Variablen als senkrechte und waagrechte rote Linien eingezeichnet sein."
+  Figure: fechnerABCD.R
+  FigureType: new  
+
+- Class: mult_question
+  Output: "Wenn es einen positiven Zusammenhang zwischen den Variablen gibt, wo würden wir die meisten Punkte im Scatterplot erwarten?"
+  AnswerChoices: in den Quadranten A und C;ausschliesslich im Quadrant A; ausschliesslich im Quadrant B;in den Quadranten B und D 
+  CorrectAnswer: in den Quadranten A und C
+  AnswerTests: omnitest(correctVal="in den Quadranten A und C")
+  Hint: "Ein positiver Zusammenhang bedeutet: hohen Werte in satisfaction gehen mit hohen Werten in haveWant einher und niedrige Werte in satisfaction gehen mit nierdigen Werten in haveWant einher. In welchen Quadranten werden daher die meisten Teilnehmer liegen?"
+
+- Class: text
+  Output: "Wenn ein positiver Zusammenhang vorliegt, werden  viele Teilnehmer in den Quadranten A und C liegen. Wer überdurchschnittlich zufrieden ist, wird auch eher überdurchschnittlich in haveWant abschneiden. Wer unterdurchschnittlich zufrieden ist, wird auch eher unterdurchschnittlich bei haveWant abschneiden." 
+
+- Class: text
+  Output: "Der sogenannte Fechnersche Korrelationsindex baut genau auf dieser Idee auf." 
+
+# 20
+- Class: figure
+  Output: "In der Plotanzeige haben wir die Quadranten mit + und - markiert."
+  Figure: fechner.R
+  FigureType: new  
+  
+- Class: text
+  Output: "Zunächst zählen wir aus, wie viele Fälle in den mit + markierten Quadranten liegen (nK) und wie viele Fälle in den negativen Quadranten liegen (nD). Es ergibt sich nK=153 und nD=85."
+  
+- Class: mult_question
+  Output: "Welche Fälle überwiegen?"
+  AnswerChoices: die Fälle in den positiven Quadranten (nK); die Fälle in den negativen Quadranten (nD)
+  CorrectAnswer: die Fälle in den positiven Quadranten (nK)
+  AnswerTests: omnitest(correctVal="die Fälle in den positiven Quadranten (nK)")
+  Hint: "Welche Anzahl ist größer, nK oder nD?"
+  
+- Class: figure
+  Output: "Der Korrelationsindex F berechnet sich aus der Differenz nK - nD im Verhältnis zur Gesamtzahl der Fälle (nK + nD)."
+  Figure: fechner_formula.R
+  FigureType: new  
+
+- Class: text
+  Output: "Weil die positiven Fälle überwiegen, ist der Zähler positiv und damit der Indexwert auch positiv."
+
+- Class: text
+  Output: "Bei einem negativen Zusammenhang würden die negativen Fälle überwiegen und der Index wäre negativ."
+
+- Class: text
+  Output: "Würden sich die positiven und die negativen Werte die Waage halten, wäre der Index 0."
+
+- Class: text
+  Output: "Der Fechnersche Korrelationsindex ist allerdings ein sehr grobes Maß, da einfach nur die vier Quadranten berücksichtigt werden. In der Praxis kommt dieses Maß nur selten vor."
+
+- Class: text
+  Output: "Die Kovarianz dagegen berücksichtigt, wie weit jeder Fall von den jeweiligen Mittelwerten entfernt liegt."
+
+- Class: figure
+  Output: "Für alle Fälle in Quadrant A gilt: sie liegen oberhalb des Mittelwert in x-Richtung und oberhalb des Mittelwerts in y-Richtung. Damit ist auch das Produkt (x - x_quer) * (y - y_quer) positiv."
+  Figure: fechnerA.R
+  FigureType: new  
+
+# 30
+- Class: mult_question
+  Output: "Welches Vorzeichen hat das Produkt (x - x_quer) * (y - y_quer) für Fälle, die im Quadrant C, also links unten liegen?"
+  AnswerChoices: positiv;negativ;Null
+  CorrectAnswer: positiv
+  AnswerTests: omnitest(correctVal="positiv")
+  Hint: Beide Abweichungen sind kleiner Null. Was ergibt minus mal minus?
+
+- Class: figure
+  Output: "Das Produkt ist positiv, weil beide Abweichungen vom Mittelwert negativ sind (blaue Pfeile)."
+  Figure: fechnerC.R
+  FigureType: new  
+
+- Class: mult_question
+  Output: "Und welches Vorzeichen hat das Produkt (x - x_quer) * (y - y_quer) für Fälle, die im Quadrant D, also rechts unten liegen?"
+  AnswerChoices: positiv;negativ;Null
+  CorrectAnswer: negativ
+  AnswerTests: omnitest(correctVal="negativ")
+  Hint: Die Abweichungen in x-Richtung vom Mittelwert ist zwar positiv, in y-Richtung ist sie aber negativ. Was ergibt plus mal minus?
+
+- Class: figure
+  Output: "Richtig, das Produkt ist natürlich negativ, weil die Abweichungen vom Mittelwert in x-Richtung positiv (gründer Pfeil) und die Abweichung in y-Richtung negativ ist (blauer Pfeil)."
+  Figure: fechnerD.R
+  FigureType: new  
+
+- Class: figure
+  Output: "Die Kovarianz erfasst das durchschnittliche Produkt der Abweichung und ist deswegen eben ein Maß für die gemeinsame Variation."
+  Figure: covariance_formula.R
+  FigureType: new  
+
+- Class: cmd_question
+  Output: "Wir berechnen also eine neue Variable daten$abweichungSatisfaction, die angibt, wie weit diese Person vom Mittelwert abweicht. Wie lautet der entprechende Befehl?"
+  CorrectAnswer: daten$abweichungSatisfaction <- daten$satisfaction - mean(daten$satisfaction)
+  AnswerTests: var_assigns_to("daten$abweichungSatisfaction");val_are_equal(daten$abweichungSatisfaction, daten$satisfaction - mean(daten$satisfaction))
+  Hint: "Der folgende Befehl führt zum Ziel: daten$abweichungSatisfaction <- daten$satisfaction - mean(daten$satisfaction). Achten Sie auf Groß-Klein-Schreibung."
+
+- Class: cmd_question
+  Output: "Das gleiche für haveWant. Wir berechnen eine neue Variable daten$abweichungHaveWant, die angibt, wie weit diese Person vom Mittelwert abweicht. Wie lautet der entprechende Befehl?"
+  CorrectAnswer: daten$abweichungHaveWant <- daten$haveWant - mean(daten$haveWant)
+  AnswerTests: var_assigns_to("daten$abweichungHaveWant");val_are_equal(daten$abweichungHaveWant, daten$haveWant - mean(daten$haveWant))
+  Hint: "Ganz analog zum vorherigen Befehl: daten$abweichungHaveWant <- daten$haveWant - mean(daten$haveWant). Achten Sie auf Groß-Klein-Schreibung."
+
+- Class: cmd_question
+  Output: "Eine dritte neue Variable  daten$produkt soll nun das Produkt der beiden gerade berechneten Abweichungenenthalten. Wie lautet der entprechende Befehl?"
+  CorrectAnswer: daten$produkt <- daten$abweichungSatisfaction * daten$abweichungHaveWant
+  AnswerTests: var_assigns_to("daten$produkt");val_are_equal(daten$produkt, daten$abweichungSatisfaction * daten$abweichungHaveWant)
+  Hint: "Einfach die Variablen miteinander multiplizieren: daten$produkt <- daten$abweichungSatisfaction * daten$abweichungHaveWant. Achten Sie auf Groß-Klein-Schreibung."
+
+- Class: cmd_question
+  Output: "Nach Formel ergibt sich nun die Kovarianz aus der Summe dieser 238 Produkte geteilt durch n-1=237. Berechnen Sie die Kovarianz."
+  CorrectAnswer: sum(daten$produkt)/237 
+  AnswerTests: omnitest(correctVal=sum(daten$produkt)/237)
+  Hint: "Am einfachsten mit dem Befehl sum(): sum(daten$produkt)/237. Achten Sie auf Groß-Klein-Schreibung."
+
+- Class: cmd_question
+  Output: "Natürlich hat R auch einen Befehl für die Kovarianz eingebaut, damit man nicht jedes Mal erst die vielen Zwischenergebnisse ausrechnen muss. Der Befehl lautet cov(x, y). Berechnen Sie nun die Kovarianz der Variablen satisfaction und haveWant."
+  CorrectAnswer: cov(daten$satisfaction, daten$haveWant) 
+  AnswerTests: omnitest(correctVal=cov(daten$satisfaction, daten$haveWant))
+  Hint: "Setzen Sie die beiden Variablen in den Befehl ein: cov(daten$satisfaction, daten$haveWant)"
+
+#40
+- Class: text
+  Output: "Das Ergebnis ist das selbe."
+
+
+- Class: mult_question
+  Output: "Die Kovarianz ist also ein Maß für die Stärke des Zusammenhangs zwischen zwei intervallskalierten Variablen. Was bedeutet es, wenn die Kovarianz der Variablen A und B positiv ist?"
+  AnswerChoices: je höher A desto höher B;je höher A desto nieriger B; A und B sind gleich
+  CorrectAnswer: je höher A desto höher B
+  AnswerTests: omnitest(correctVal="je höher A desto höher B")
+  Hint: "Wir hatten gesehen, dass die Kovarianz positiv ist, wenn viele Fälle in den mit + gekennzeichneten Quadranten liegen, also links-unten und recht-oben. Was bedeutet eine positive Kovarianz?"
+
+- Class: mult_question
+  Output: "Und was bedeutet es, wenn die Kovarianz der Variablen A und B negativ ist?"
+  AnswerChoices: je höher A desto höher B;je höher A desto nieriger B; A und B sind gleich
+  CorrectAnswer: je höher A desto niedriger B
+  AnswerTests: omnitest(correctVal="je höher A desto nieriger B")
+  Hint: "Wir hatten gesehen, dass die Kovarianz negativ ist, wenn viele Fälle in den mit - gekennzeichneten Quadranten liegen, also links-oben und rechts-unten. Was bedeutet eine negative Kovarianz?"
+
+- Class: mult_question
+  Output: "Wir können also die Richtung des Zusammenhangs ablesen. Aber die Kovarianz hat einen entscheidenden Nachteil. Welcher könnte das sein?"
+  AnswerChoices: die Höhe der Kovarianz hängt von der Skalierung der Variablen ab;die Kovarianz kann nicht größer als 1 werden;die Kovarianz kann nicht kleiner als -1 werden
+  CorrectAnswer: die Höhe der Kovarianz hängt von der Skalierung der Variablen ab
+  AnswerTests: omnitest(correctVal="die Höhe der Kovarianz hängt von der Skalierung der Variablen ab")
+  Hint: "Würde sich die Kovarianz ändern, wenn wir alle satisfaction-Werte mit 10 multiplizieren würden?"
+
+- Class: figure
+  Output: "Aus einem Kovarianzwert von cov=0.048 lässt sich nicht direkt ablesen, ob es sich um einen starken oder um einen schwachen Zusammenhang handelt. Wenn wir die Kovarianz durch die Standardabweichungen der beiden beteiligten Variablen teilen, ergibt sich automatisch ein Wert zwischen -1 und 1. Das macht die Interpretation viel einfacher."
+  Figure: kov.R
+  FigureType: add
+
+- Class: cmd_question
+  Output: "Der Befehl für die Standardabweichung ist sd() wie standard deviation. Wir haben die Kovarianz von satisfaction und haveWant in der Variable kov abgespeichert. Teilen Sie kov durch die beiden Standardabweichungen."
+  CorrectAnswer: kov/(sd(daten$satisfaction)*sd(daten$haveWant)) 
+  AnswerTests: omnitest(correctVal=kov/(sd(daten$satisfaction)*sd(daten$haveWant)))
+  Hint: "Teilen Sie kov durch das Produkt der beiden Standardabweichungen: kov/(sd(daten$satisfaction)*sd(daten$haveWant))"
+
+- Class: cmd_question
+  Output: "Diese standardisierte Kovarianz nennt sich Produkt-Moment-Korrelation oder Pearson-Korrelation. Natürlich hat R auch für die Produkt-Moment-Korrelation einen eigenen Befehl: cor(x, y). Berechnen Sie nun die Korelation der Variablen satisfaction und haveWant."
+  CorrectAnswer: cor(daten$satisfaction, daten$haveWant) 
+  AnswerTests: omnitest(correctVal=cor(daten$satisfaction, daten$haveWant))
+  Hint: "Setzen Sie die beiden Variablen in den Befehl ein: cor(daten$satisfaction, daten$haveWant)"
+
+- Class: text
+  Output: "Das Ergebnis ist auch hier das selbe."
+
+- Class: mult_question
+  Output: "Die Korrelation ist also ebenfalls ein Maß für die Stärke des Zusammenhangs zwischen zwei intervallskalierten Variablen. Was bedeutet es, wenn die Korrelation der Variablen A und B positiv ist?"
+  AnswerChoices: je höher A desto höher B;je höher A desto nieriger B; A und B sind gleich
+  CorrectAnswer: je höher A desto höher B
+  AnswerTests: omnitest(correctVal="je höher A desto höher B")
+  Hint: "Wir hatten gesehen, dass die Kovarianz positiv ist, wenn viele Fälle in den mit + gekennzeichneten Quadranten liegen, also links-unten und recht-oben. Dies gilt auch für die Korrelation."
+
+- Class: mult_question
+  Output: "Und was bedeutet es, wenn die Korrelation der Variablen A und B negativ ist?"
+  AnswerChoices: je höher A desto höher B;je höher A desto nieriger B; A und B sind gleich
+  CorrectAnswer: je höher A desto niedriger B
+  AnswerTests: omnitest(correctVal="je höher A desto nieriger B")
+  Hint: "Wir hatten gesehen, dass die Kovarianz negativ ist, wenn viele Fälle in den mit - gekennzeichneten Quadranten liegen, also links-oben und rechts-unten. Dies gilt auch für die Korrelation."
+
+#50
+- Class: cmd_question
+  Output: "Berechnen Sie auch gleich noch die Korrelation zwischen satisfaction und wantHave."
+  CorrectAnswer: cor(daten$satisfaction, daten$wantHave) 
+  AnswerTests: omnitest(correctVal=cor(daten$satisfaction, daten$wantHave))
+  Hint: "Setzen Sie die beiden Variablen in den Befehl cor() ein: cor(daten$satisfaction, daten$wantHave)"
+
+- Class: text
+  Output: "In dieser Übung haben Sie gelernt, was die Kovarianz ist und wie sich daraus die Produkt-Moment-Korrelation ableitet. Damit haben wir ein Zusammenhangsmaß, das sich in vielen Situationen anwenden lässt. Allerdings muss man bei der Interpretation einige Dinge beachten. Dies erkunden wir im nächsten Kapitel."
+  
