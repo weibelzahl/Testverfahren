@@ -1,0 +1,7 @@
+set.seed(19)
+x <- c(rnorm(n = 50, mean = 3, sd = .5), rnorm(n = 50, mean = 8, sd = .5))
+y <- c(rep(3, times = 25), rep(8, times = 25), rep(3, times = 25), rep(8, times = 25)) + rnorm(n= 100, mean = 0, sd = .7)
+plot(x, y, xlab = "Arbeitsdruck", ylab = "Arbeitsleistung")
+# cor(x,y)
+remove(x)
+remove(y)

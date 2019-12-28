@@ -1,0 +1,214 @@
+- Class: meta
+  Course: Testverfahren
+  Lesson: Interpretation der Produkt-Moment-Korrelation
+  Author: Stephan Weibelzahl
+  Type: Standard
+  Organization: PFH Göttingen
+  Version: 0.1
+  
+- Class: text
+  Output: "In diesem Kapitel lernen Sie, wie die Produkt-Moment-Korrelation interpretiert wird."
+  
+- Class: text
+  Output: "Wir verwenden erneut die Daten aus einer Replikation einer Studie von Larsen and McKibban (2008), in der es darum geht, ob Menschen glücklich sind, weil sie haben, was Sie sich wünschen oder weil sie sich das wünschen, was sie haben."
+
+# Deskriptive Statistik
+- Class: cmd_question
+  Output: "Die Daten sind in einem Datensatz namens daten gespeichert. Verwenden Sie den Befehl head(), um die ersten 10 Fälle auszugeben."
+  CorrectAnswer: head(daten)
+  AnswerTests: omnitest(correctExpr='head(daten)')
+  Hint: "Tippen Sie head(daten) in die Konsole, um den Anfang des Datensatzes zu sehen."
+
+- Class: cmd_question
+  Output: "Berechnen Sie nun die Korrelation zwischen den Variablen satifaction und haveWant."
+  CorrectAnswer: cor(daten$satisfaction,daten$haveWant)
+  AnswerTests: omnitest(correctVal=cor(daten$satisfaction,daten$haveWant))
+  Hint: "Tippen Sie cor(daten$satisfaction, daten$haveWant). Achten Sie auf Groß-Klein-Schreibung."
+
+- Class: text
+  Output: "Die Korrelation beträgt r=,54. Nein, das ist kein Tippfehler. Beim Bericht des Korrelationskoeffizienten lässt man meist die Null weg, um zu signalisieren, dass der Wert zwischen -1 und 1 liegen muss."
+
+- Class: mult_question
+  Output: "Wir hatten gesehen, dass die Produkt-Moment-Korrelation auf den Wertebereich [-1; 1] standardisiert ist. Ist r=,54 eine starke oder eine schwache Korrelation?"
+  AnswerChoices: stark;schwach;Woher soll ich das wissen?
+  CorrectAnswer: stark
+  AnswerTests: TRUE
+  Hint: Alle Antworten sind erlaubt. 
+  
+- Class: text
+  Output: "Auch wenn theoretisch Werte nahe 1 und nahe -1 auftreten können, zählt r>,5 in der psychologischen Praxis schon als starke Korrelation. Korrelationskoeffizienten größer als r=,8 sind in realen psychologischen Datensätzen eher selten anzutreffen."
+
+- Class: cmd_question
+  Output: 'Häufig wird bei der Interpretation der Stärke einer Korrelation auf Cohen (1982) verwiesen. Paul Cohen hatte Empfehlungen gegeben, welche Effektgrößen in der Praxis als schwach (small), mittel (medium) und stark (large) einzuschätzen sind. Wer sich diese Empfehlungen nicht merken kann, kann sie im Paket pwr mit dem Befehl cohen.ES() abfragen. Man übergibt dem Befehl zwei Argumente: den Typ der gesuchten Effektstärke (hier: "r") und die gesuchte Größe (hier "large"). Berechnen Sie mit dem Befehl cohen.ES(), die Effektstärke eines großen Korrelationseffekts.'
+  CorrectAnswer: cohen.ES("r", "large")
+  AnswerTests: omnitest(correctExpr='cohen.ES("r", "large")')
+  Hint: 'Dem Befehl werden einfach die beiden Argumente nacheinander übergeben: cohen.ES("r", "large")'
+
+- Class: cmd_question
+  Output: 'r=,54 ist also nach diesen Empfehlungen tatsächlich ein großer Effekt. Wann würde man degegen von einem kleinen Effekt (small) sprechen?'
+  CorrectAnswer: cohen.ES("r", "small")
+  AnswerTests: omnitest(correctExpr='cohen.ES("r", "small")')
+  Hint: 'Dem Befehl werden einfach die beiden Argumente nacheinander übergeben: cohen.ES("r", "small")'
+
+# 10
+- Class: text
+  Output: "Dabei ist die Richtung übrigens egal. Ein Zusammenhang von r=-,1 würde ebenfalls als klein und ein Zusammenhang von r=-,5 würde ebenfalls als stark eingeschätzt."
+
+- Class: text
+  Output: "Wir können aus dem Korrelationskoeffizienten also die Richtung (positiv vs. negativ) und die Stärke des Zusammenhangs ablesen."
+
+- Class: mult_question
+  Output: "Es gibt eine Korrelation zwischen dem Konsum von Speiseeis und der Anzahl von Sonnenbränden. In Monaten, in denen viel Eis gegessen wird, verzeichnen Ärzte ein besonders hohe Anzahl an Personen mit Sonnenbränden auf der Haut. In Monaten mit geringem Eiskonsum werden dagegen wenige Personen mit Sonnenbrand vorstellig. Beutet dies, dass der Konsum von Speiseeis zu Sonnenbrand führt?"
+  AnswerChoices: nein, ein Kausalzusammenhang muss nicht vorliegen;ja, das Eis ist die Ursache für die Sonnenbrände
+  CorrectAnswer: nein, ein Kausalzusammenhang muss nicht vorliegen
+  AnswerTests: omnitest(correctVal='nein, ein Kausalzusammenhang muss nicht vorliegen')
+  Hint: Sie denken nicht wirklich, dass Eis die Ursache für Sonnenbrand ist, oder? 
+
+- Class: text
+  Output: "Es gilt zwar: hohe Wert im Konsum von Speiseeis gehen mit hoher Anzahl von Sonnenbränden einher. Und: niedrige Werte im Konsum von Speiseeis gehen mit geringer Anzahl von Sonnenbränden einher. Dies bedeutet aber natürlich nicht notwendigerweise, dass sich die Speiseeiskonsum auf die Sonnenbrände auswirkt."
+
+- Class: mult_question
+  Output: "Was halten Sie für die plausibelste Erklärung für den beobachteten Zusammenhang?"
+  AnswerChoices: wenn die Sonne scheint, wird mehr Eis gegessen und es entstehen mehr Sonnenbrände;Menschen, die Sonnenbrand haben, kaufen mehr Eis, um sich damit die Haut zu kühlen;die Haut wird durch Inhaltsstoffe des Eis sensitiver und verbrennt dadurch leichter
+  CorrectAnswer: wenn die Sonne scheint, wird mehr Eis gegessen und es entstehen mehr Sonnenbrände
+  AnswerTests: TRUE
+  Hint: "Die Korrelation macht keine Aussage zur Wirkrichtung."
+
+- Class: text
+  Output: "Alle genannten Begründungen sind theoretisch denkbar, wenn auch nicht unbedingt gleichermaßen plausibel. Es könnte also einen direkten Kausalzusammenhang geben. Am wahrscheinlichsten ist jedoch, dass es eine dritte Variable im Hintergrund gibt, die beide Variablen beeinflusst. Der Sonnenschein wirkt sich sowohl auf den Eiskonsum wie auch auf die Anzahl der Sonnenbrände aus."
+
+- Class: text
+  Output: "Bei diesem Beispiel ist es einigermaßen offensichtlich, was die wahren Zusammenhänge sein könnten. Leider finden sich in Publikationen immer wieder Fälle, wo die Autoren eine Korrelation als Kausalzusammenhang interpretieren, obwohl die Korrelation dies nicht belegt."
+
+- Class: text
+  Output: "Dies ist also der erste große Fehler, den man bei der Interpretation eines Korrelationskoeffizienten machen kann: eine gefundene Korrelation als Kausalzusammenhang interpretieren. Eine Wirkrichtung A -> B ist möglich. Aber auch wenn die Wirkrichung B -> A wäre, würde sich ja eine Korrelation zeigen. Und häufig entsteht, wie in unserem Beispiel, die Korrelation auf Grund eines dritten Faktors C, der sich auf A und auf B auswirkt, ohne dass es einen direkten Zusammenhang zwischen A und B gibt."
+
+- Class: figure
+  Output: "Es gibt aber noch einen zweiten Fehler, den man bei der Interpretation begehen kann. Sehen Sie sich den Scatterplot an."
+  Figure: nullcorrelationA.R
+  FigureType: new  
+
+- Class: mult_question
+  Output: "Wie hoch schätzen Sie die Korrelation zwischen x und y in dem angezeigten Plot?"
+  AnswerChoices: r=0;r=,5;r=-,6
+  CorrectAnswer: r=0
+  AnswerTests: omnitest(correctVal="r=0")
+  Hint: "Ist die Punktewolke deutlich in eine Richtung geneigt?"
+
+# 20
+- Class: text
+  Output: "Die Korrelation von x und y in diesem Beispiel ist tatsächlich r=0. Wenn zwei Variablen nicht korrelieren, sieht die Punktewolke häufig genau so aus: ein wild durcheinandergewürfelter Haufen."
+
+- Class: figure
+  Output: "In dem nun angezeigten Plot sehen Sie, wie der Zusammenhang zwischen Arbeitsdruck und Arbeitsleistung aussehen könnte. Mittlerer Arbeitsdruck scheint sich positiv auszuwirken. Zu hoher oder sehr geringer Druck dagegen gehen mit geringerer Leistung einher. Hofmans et al. (2015) haben tatsächlich einen ähnlichen Zusammenhang nachgewiesen."
+  Figure: nullcorrelationB.R
+  FigureType: new  
+
+- Class: mult_question
+  Output: "Wie würden Sie diesen Zusammenhang beschreiben?"
+  AnswerChoices: es gibt einen nicht-linearen Zusammenhang;es gibt einen linearen Zusammenhang;es gibt keinen Zusammenhang
+  CorrectAnswer: es gibt einen nicht-linearen Zusammenhang
+  AnswerTests: omnitest(correctVal="es gibt einen nicht-linearen Zusammenhang")
+  Hint: "Linearer Zusammenhang würde bedeuten: je höher der Arbeitsdruck desto höher die Arbeitsleistung. Kein Zusammenhang würde bedeuten: Arbeitsdruck und Arbeitsleistung sind unabhängig voneinander. Trifft eine dieser Beschreibungen zu?"
+
+- Class: text
+  Output: "Es besteht ein nicht-linearer Zusammenhang. Man könnte ihn als umgekehrt-U-förmig beschreiben, auch wenn dies keine exakte matematische Definition ist. Häufig sagt man: ein kurvi-linearer Zusammenhang."
+
+- Class: mult_question
+  Output: "Wie hoch schätzen Sie nun aber die Korrelation zwischen Arbeitsdruck und Arbeitsleistung in dem angezeigten Plot?"
+  AnswerChoices: r=0;r=,5;r=-,6
+  CorrectAnswer: r=0
+  AnswerTests: omnitest(correctVal="r=0")
+  Hint: "Ist die Punktewolke deutlich in eine Richtung geneigt?"
+
+- Class: text
+  Output: "Richtig, es besteht zwar eine Beziehung zwischen den beiden Variablen, aber die Korrelation ist trotzdem r=0. Die Produkt-Moment-Korrelation ist nicht geeignet, um einen nicht-linearen Zusammenhang aufzudecken."
+
+- Class: mult_question
+  Output: "Deshalb ist Vorsicht geboten, wenn Sie eine Null-Korrelation finden. Wie lautet die korrekte Interpretation von r=0?"
+  AnswerChoices: es gibt keinen linearen Zusammenhang;es gibt keinen Zusammenhang
+  CorrectAnswer: es gibt keinen linearen Zusammenhang
+  AnswerTests: omnitest(correctVal="es gibt keinen linearen Zusammenhang")
+  Hint: "Im Beispiel mit Arbeitsdruck und Arbeitsleistung war r=0 und es gab trotzdem einen nicht-linearen Zusammenhang. Wie lautet also die korrekte Interpretation?"
+
+- Class: figure
+  Output: "In der Psychologie gibt es häufiger Datensituationen, bei denen der absolute Wert des Korrelationskoeffizienten fehlleitend sein kann. Wenn etwa, wie im Beispiel in der Plotanzeige, vier unterschiedliche Gruppen existieren, ergibt sich ebenfalls r=0, obwohl auch hier eine Abhängigkeit zwischen x und y vorliegt."
+  Figure: nullcorrelationC.R
+  FigureType: new  
+
+- Class: mult_question
+  Output: "Wenn Sie eine Korrelation von r=0 finden, sollten Sie zunächst ..."
+  AnswerChoices: einen Scatterplot der beiden Variablen erstellen;die Kovarianz berechnen;eine Kreuvalidierung durchführen
+  CorrectAnswer: einen Scatterplot der beiden Variablen erstellen
+  AnswerTests: omnitest(correctVal="einen Scatterplot der beiden Variablen erstellen")
+  Hint: "Zur Erinnerung: die Korrelation errechnet sich aus der Kovarianz. Die Kreuzvalidierung kommt bei der Regression zum Einsatz. Besser ist es zunächst ..."
+
+- Class: text
+  Output: "Richtig, mit Hilfe eines Scatterplots lässt sich prüfen, ob nicht doch ein Zusammenhang zwischen den Variablen besteht, der sich aber nicht im Korrelationskoeffizienten widerspiegelt."
+
+# 30
+- Class: mult_question
+  Output: "Fassen wir also noch einmal zusammen. Angenommen, Sie finden in einer Stichprobe von N=80 Studierenden eine Korrelation zwischen Klausurvorbereitungszeit und Klausurpunkten in Höhe von r=,61. Welche Interpretation ist richtig?"
+  AnswerChoices: je länger die Vorbereitungszeit einer Person, desto mehr Klausurpunkte hat diese Person erreicht;je länger die Vorbereitungszeit einer Person, desto weniger Klausurpunkte hat diese Person erreicht;Vorbereitungszeit und Klausurpunkte hängen nicht zusammen
+  CorrectAnswer: je länger die Vorbereitungszeit einer Person, desto mehr Klausurpunkte hat diese Person erreicht
+  AnswerTests: omnitest(correctVal="je länger die Vorbereitungszeit einer Person, desto mehr Klausurpunkte hat diese Person erreicht")
+  Hint: "Es handelt sich um eine positive Korrelation. Deswegen gilt:"
+
+- Class: mult_question
+  Output: "Die Korrelation ist positiv. Hohe Werte in der Vorbereitungszeit gehen mit hoher Anzahl an Klausurpunkten einher. Wie stark ausgeprägt ist dieser Zusammenhang?"
+  AnswerChoices: stark;mittel;schwach
+  CorrectAnswer: stark
+  AnswerTests: omnitest(correctVal="stark")
+  Hint: "Nach den Empfehlungen von Cohen: 0,1 = schwach (small); 0,3 = mittel (medium); 0,5 = stark (large). Welcher Effektgröße entspricht der gefundene Wert von r=,61 am ehesten?"
+
+- Class: mult_question
+  Output: "Eine starke positive Korrelation. Welche Aussage zu diesem Zusammenhang ist richtig?"
+  AnswerChoices: die Korrelation macht keine Aussage über die Wirkrichtung;lange Vorbereitungszeit führt zu mehr Klausurpunkten;ein gutes Abschneiden in der Klausur führt dazu, dass sich die Studierenden gut vorbereiten
+  CorrectAnswer: die Korrelation macht keine Aussage über die Wirkrichtung
+  AnswerTests: omnitest(correctVal="die Korrelation macht keine Aussage über die Wirkrichtung")
+  Hint: "Das Vorhandensein einer Korrelation ist kein Beleg für eine Wirkrichtung. Sie zeigt lediglich an, dass hohe Werte in der Vorbereitungszeit mit hohen Werten bei den Klausurpunkten einhergehen. Welche Aussage ist richtig?"
+
+- Class: mult_question
+  Output: "In der gleichen Studie finden Sie eine Korrelation von Offenheit für Erfahrungen und Klausurpunkten in Höhe von r=-,16. Welche Interpretation ist richtig?"
+  AnswerChoices: je höher die Offenheit einer Person, desto weniger Klausurpunkte hat diese Person erreicht;je höher die Offenheit einer Person, desto mehr Klausurpunkte hat diese Person erreicht;Offenheit und Klausurpunkte hängen nicht zusammen
+  CorrectAnswer: je höher die Offenheit einer Person, desto weniger Klausurpunkte hat diese Person erreicht
+  AnswerTests: omnitest(correctVal="je höher die Offenheit einer Person, desto weniger Klausurpunkte hat diese Person erreicht")
+  Hint: "Es handelt sich um eine negative Korrelation. Deswegen gilt:"
+
+- Class: mult_question
+  Output: "Die Korrelation ist negativ. Hohe Werte im Persönlichkeitsmerkmal Offenheit gehen mit niedriger Anzahl an Klausurpunkten einher. Wie stark ausgeprägt ist dieser Zusammenhang?"
+  AnswerChoices: schwach;stark;mittel
+  CorrectAnswer: schwach
+  AnswerTests: omnitest(correctVal="schwach")
+  Hint: "Nach den Empfehlungen von Cohen: 0,1 = schwach (small); 0,3 = mittel (medium); 0,5 = stark (large). Welcher Effektgröße entspricht der gefundene Wert von r=-,16 am ehesten?"
+
+- Class: mult_question
+  Output: "Eine schwache negative Korrelation. Welche Aussage zu diesem Zusammenhang ist richtig?"
+  AnswerChoices: die Korrelation macht keine Aussage über die Wirkrichtung;stark ausgeprägte Offenheit führt zu weniger Klausurpunkten;ein schlechtes Abschneiden in der Klausur führt dazu, dass sich die Studierenden offener fühlen
+  CorrectAnswer: die Korrelation macht keine Aussage über die Wirkrichtung
+  AnswerTests: omnitest(correctVal="die Korrelation macht keine Aussage über die Wirkrichtung")
+  Hint: "Das Vorhandensein einer Korrelation ist kein Beleg für eine Wirkrichtung. Sie zeigt lediglich an, dass (tendenziell) hohe Werte in der Offenheit mit niedrigen Werten bei den Klausurpunkten einhergehen. Welche Aussage ist richtig?"
+
+- Class: mult_question
+  Output: "Nun finden Sie auch noch heraus, dass bei den gleichen Studierenden die Korrelation zwischen Prüfungsangst und erreichten Klausurpunkten r=,02 beträgt. Welche Interpretation ist richtig?"
+  AnswerChoices: Prüfungsangst und Klausurpunkte hängen nicht linear zusammen;Prüfungsangst und Klausurpunkte hängen nicht zusammen;je höher die Prüfungsangst einer Person, desto weniger Klausurpunkte hat diese Person erreicht;je höher die Prüfungsangst einer Person, desto mehr Klausurpunkte hat diese Person erreicht
+  CorrectAnswer: Prüfungsangst und Klausurpunkte hängen nicht linear zusammen
+  AnswerTests: omnitest(correctVal="Prüfungsangst und Klausurpunkte hängen nicht linear zusammen")
+  Hint: "Der Korrelationskoeffizient ist ungefähr Null. Die Korrelation ist weder positiv noch negativ. Deswegen gilt:"
+
+- Class: text
+  Output: "Ähnlich wie im Beispiel mit dem Arbeitsdruck und der Arbeitsleistung, wäre es denkbar, dass Studierender mit mittlerer Prüfungsangst am Besten abschneiden. Zu ängstlich zu sein ist nicht förderlich. Aber zu entspannt zu sein, ist vielleicht auch nicht förderlich."
+
+- Class: mult_question
+  Output: "Wie könnten wir herausfinden, ob ein solcher kurvi-linearer Zusammenhang vorliegen könnte?"
+  AnswerChoices: Scatterplot erstellen;Boxplot erstellen;Stamm-Blatt-Diagramm erstellen
+  CorrectAnswer: Scatterplot erstellen
+  AnswerTests: omnitest(correctVal="Scatterplot erstellen")
+  Hint: "Boxplot und Stamm-Blatt-Diagramm sind beides univariate Darstellungen, sie beziehen sich nur auf eine Variable. Wie könnten wir herausfinden, ob ein kurvi-linearer Zusammenhang zwischen den beiden Variablen vorliegen könnte?"
+
+# 40
+- Class: text
+  Output: "Im Scatterplot könnten wir ggf. erkennen, ob eine kurvi-linearer Zusammenhang vorliegen könnte und dann passende Analyseverfahren anwenden."
+
+- Class: text
+  Output: "In dieser Übung haben Sie gelernt, wie Korrelationskoeffizienten interpretiert werden. Leider werden diese häufig falsch interpretiert. Umso wichtiger ist es, zu wissen wie es richtig geht, um Angaben in Publikationen richtig beurteilen zu können."

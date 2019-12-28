@@ -1,0 +1,7 @@
+set.seed(1235)
+x <- rnorm(n = 100, mean = 5.5, sd = 2)
+y <- rnorm(n= 100, mean = 5.5, sd = 2)
+plot(x, y)
+# cor(x,y)
+remove(x)
+remove(y)
